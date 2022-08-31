@@ -1,14 +1,6 @@
-.example-label {
-    display: table-cell;
-    font-size: 14px;
-    margin-left: 8px;
-    min-width: 120px;
-  }
-
 .example-list{
-    text-align: left;
+    margin: auto;
     display: table;
-    margin: 0 auto;
 }
 
 .example-button-row {
@@ -16,5 +8,11 @@
 }
 
 .example-button {
-    width: 490px
+    width: 300px;
+    margin: 0 auto;
 }
+
+.container.is-phone {
+    margin: 0;
+    padding:0;
+ }

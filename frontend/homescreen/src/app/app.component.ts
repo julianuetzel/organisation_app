@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
 import { Subject, takeUntil } from 'rxjs';
 
@@ -7,42 +7,25 @@ import { Subject, takeUntil } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnDestroy{
+export class AppComponent implements OnInit {
   title = 'homescreen';
+  isPhone = false;
 
-  destroyed = new Subject<void>();
-  currentScreenSize: string = "";
+  constructor(private responsive: BreakpointObserver){
 
-  // Create a map to display breakpoint names for demonstration purposes.
-  displayNameMap = new Map([
-    [Breakpoints.XSmall, 'XSmall'],
-    [Breakpoints.Small, 'Small'],
-    [Breakpoints.Medium, 'Medium'],
-    [Breakpoints.Large, 'Large'],
-    [Breakpoints.XLarge, 'XLarge'],
-  ]);
-
-  constructor(breakpointObserver: BreakpointObserver) {
-    breakpointObserver
-      .observe([
-        Breakpoints.XSmall,
-        Breakpoints.Small,
-        Breakpoints.Medium,
-        Breakpoints.Large,
-        Breakpoints.XLarge,
-      ])
-      .pipe(takeUntil(this.destroyed))
-      .subscribe(result => {
-        for (const query of Object.keys(result.breakpoints)) {
-          if (result.breakpoints[query]) {
-            this.currentScreenSize = this.displayNameMap.get(query) ?? 'Unknown';
-          }
-        }
-      });
   }
+  ngOnInit(): void {
+    this.responsive.observe(Breakpoints.Handset)
+      .subscribe(result => {
+        this.isPhone = false;
 
-  ngOnDestroy() {
-    this.destroyed.next();
-    this.destroyed.complete();
+        if (result.matches) {
+          this.isPhone = true;
+        }
+      })
   }
 }
+
+
+
+
