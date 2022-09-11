@@ -1,31 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
-import { Subject, takeUntil } from 'rxjs';
+import { Component, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-  title = 'homescreen';
-  isPhone = false;
-
-  constructor(private responsive: BreakpointObserver){
+export class AppComponent implements OnDestroy{
+  title = 'LifeStyle';
+  
+  showFiller=false;
+   
+  constructor(){
 
   }
-  ngOnInit(): void {
-    this.responsive.observe(Breakpoints.Handset)
-      .subscribe(result => {
-        this.isPhone = false;
-
-        if (result.matches) {
-          this.isPhone = true;
-        }
-      })
+  ngOnDestroy(): void {
   }
 }
-
 
 
 
