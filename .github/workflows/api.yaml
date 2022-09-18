@@ -1,0 +1,9 @@
+name: api
+on: [push]
+jobs:
+  spectral: 
+    runs on: ubuntu-22.04
+    steps:
+    - before
+
+
