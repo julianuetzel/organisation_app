@@ -1,0 +1,44 @@
+name: frontend
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        node-version: ["10.x", "12.x", "14.x", "15.x"]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+          with: node-version: '12.x'
+      
+      - name: Cache node modules
+        id: cache-nodemodules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          # caching node_modules
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+            
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build dependencies
+        run: npm run build -- --prod
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test -- --prod
+
