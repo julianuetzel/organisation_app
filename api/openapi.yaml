@@ -1,263 +1,229 @@
-openapi: 3.0.3
-tags:
-  - name: daily-todo
-    description: Daily ToDo Options
-  - name: shopping-list
-    description: Weekly Shopping-list Options
-  - name: food-diary
-    description: Operations about weekly food plan
-  - name: finances
-    description: Financial Options
-  - name: hobbies
-    description: Options about Hobbies
-  - name: calendar
-    description: Monthly planning Options
-  - name: weekly-todo
-    description: Weekly ToDo Options
+openapi: 3.0.2
+info:
+  title: FastAPI
+  version: 0.1.0
 paths:
-  /daily-todo:
+  /daily-todos/:
     get:
       tags:
-        - daily-todo
-      summary: Get all todos
-      description: Returns all Todos
-      operationId: getDailyTodos
+      - daily-todos
+      summary: Get Daily Todos
+      operationId: get_daily_todos_daily_todos__get
       responses:
         '200':
-          description: successful operation
+          description: Get all daily_todos
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DailyToDo'  
-        '404':
-          description: todos not found
-    put:
-      tags:
-        - daily-todo
-      summary: Update an existing todo
-      description: Update an existing todo by Id
-      operationId: updateDailyTodo
-      requestBody:
-        description: Update an existent todo
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DailyToDo'
-        required: true
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DailyToDo'          
-        '400':
-          description: Invalid ID supplied
-        '404':
-          description: ToDo not found
+                title: Response Get Daily Todos Daily Todos  Get
+                type: array
+                items:
+                  "$ref": "#/components/schemas/DailyToDo"
     post:
       tags:
-        - daily-todo
-      summary: Add a new todo
-      description: Add a new todo
-      operationId: addTodo
+      - daily-todos
+      summary: Create Daily Todo
+      operationId: create_daily_todo_daily_todos__post
       requestBody:
-        description: Create a new Todo 
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DailyToDo'
+              "$ref": "#/components/schemas/DailyToDo"
         required: true
       responses:
-        '200':
-          description: Successful operation
+        '201':
+          description: Create a new daily_todo
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DailyToDo'          
-        '405':
-          description: Invalid input
-  /daily-todo/{todo.id}:
+                "$ref": "#/components/schemas/DailyToDo"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  /daily-todos/{id}:
     get:
       tags:
-        - daily-todo
-      summary: Find todo by ID
-      description: Returns a single todo
-      operationId: getTodo(id)
+      - daily-todos
+      summary: Find Daily Todo
+      operationId: find_daily_todo_daily_todos__id__get
       parameters:
-        - name: todo.id
-          in: path
-          description: ID of todo to return
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - required: true
+        schema:
+          title: Id
+          type: string
+        name: id
+        in: path
       responses:
         '200':
-          description: successful operation
+          description: Get a single daily_todo by id
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DailyToDo'  
-        '400':
-          description: Invalid ID supplied
-        '404':
-          description: todo not found
-    delete:
-      tags:
-        - daily-todo
-      summary: Deletes a todo
-      description: delete a todo
-      operationId: deleteDailyTodo(id)
-      parameters:
-        - name: todo.id
-          in: path
-          description: todo id to delete
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '400':
-          description: Invalid todo value
-  /weekly-todo:
-    get:
-      tags:
-        - weekly-todo
-      summary: Get all todos
-      description: Returns all Todos
-      operationId: getWeeklyTodos
-      responses:
-        '200':
-          description: successful operation
+                "$ref": "#/components/schemas/DailyToDo"
+        '422':
+          description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WeeklyToDo'  
-        '404':
-          description: todos not found
+                "$ref": "#/components/schemas/HTTPValidationError"
     put:
       tags:
-        - weekly-todo
-      summary: Update an existing todo
-      description: Update an existing todo by Id
-      operationId: updateWeeklyTodo
-      requestBody:
-        description: Update an existent todo
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/WeeklyToDo'
-        required: true
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WeeklyToDo'          
-        '400':
-          description: Invalid ID supplied
-        '404':
-          description: ToDo not found
-    post:
-      tags:
-        - weekly-todo
-      summary: Add a new todo
-      description: Add a new todo
-      operationId: addWeeklyTodo
-      requestBody:
-        description: Create a new Todo 
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/WeeklyToDo'
-        required: true
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WeeklyToDo'          
-        '405':
-          description: Invalid input
-  /weekly-todo/{todo.id}:
-    get:
-      tags:
-        - weekly-todo
-      summary: Find todo by ID
-      description: Returns a single todo
-      operationId: getWeeklyTodo(id)
+      - daily-todos
+      summary: Update Daily Todo
+      operationId: update_daily_todo_daily_todos__id__put
       parameters:
-        - name: todo.id
-          in: path
-          description: ID of todo to return
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - required: true
+        schema:
+          title: Id
+          type: string
+        name: id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/DailyToDoUpdate"
+        required: true
       responses:
-        '200':
-          description: successful operation
+        '202':
+          description: Update a daily_todo
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WeeklyToDo'  
-        '400':
-          description: Invalid ID supplied
-        '404':
-          description: todo not found
+                "$ref": "#/components/schemas/DailyToDo"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
     delete:
       tags:
-        - weekly-todo
-      summary: Deletes a todo
-      description: delete a todo
-      operationId: deleteWeeklyTodo(id)
+      - daily-todos
+      summary: Delete Daily Todo
+      operationId: delete_daily_todo_daily_todos__id__delete
       parameters:
-        - name: todo.id
-          in: path
-          description: todo id to delete
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - required: true
+        schema:
+          title: Id
+          type: string
+        name: id
+        in: path
       responses:
-        '400':
-          description: Invalid todo value
-  
+        '200':
+          description: Delete a daily_todo
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  /daily-todos/{date}:
+    get:
+      tags:
+      - daily-todos
+      summary: Find Daily Todos
+      operationId: find_daily_todos_daily_todos__date__get
+      parameters:
+      - required: true
+        schema:
+          title: Date
+          type: string
+        name: date
+        in: path
+      responses:
+        '200':
+          description: Get all daily_todos for the day
+          content:
+            application/json:
+              schema:
+                title: Response Find Daily Todos Daily Todos  Date  Get
+                type: array
+                items:
+                  "$ref": "#/components/schemas/DailyToDo"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
 components:
   schemas:
     DailyToDo:
+      title: DailyToDo
       required:
-        - id
-        - task
-        - status
+      - task
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          example: 10
-        task:
+          title: Id
           type: string
-          example: einkaufen
-    WeeklyToDo:
-      required:
-        - id
-        - task
-        - status
-        - done_by
+        task:
+          title: Task
+          type: string
+        status:
+          allOf:
+          - "$ref": "#/components/schemas/DailyTodoStatus"
+          default: Open
+        date:
+          title: Date
+          type: string
+      example:
+        id: '1'
+        task: Abwaschen
+        status: Open
+        date: '2022-09-14'
+    DailyToDoUpdate:
+      title: DailyToDoUpdate
       type: object
       properties:
-        id:
-          type: integer
-          format: int64
-          example: 10
         task:
+          title: Task
           type: string
-          example: einkaufen
-        done_by:
+        status:
+          "$ref": "#/components/schemas/DailyTodoStatus"
+      example:
+        task: Abwaschen
+        status: Done
+    DailyTodoStatus:
+      title: DailyTodoStatus
+      enum:
+      - Open
+      - Closed
+      description: An enumeration.
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            "$ref": "#/components/schemas/ValidationError"
+    ValidationError:
+      title: ValidationError
+      required:
+      - loc
+      - msg
+      - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+        msg:
+          title: Message
           type: string
-          format: date-time
-          example: 07-12-2022
+        type:
+          title: Error Type
+          type: string
