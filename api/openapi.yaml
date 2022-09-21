@@ -304,6 +304,155 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/HTTPValidationError"
+  "/finances/":
+    get:
+      tags:
+      - finances
+      summary: Get All
+      operationId: get_all_finances__get
+      responses:
+        '200':
+          description: Get all finances
+          content:
+            application/json:
+              schema:
+                title: Response Get All Finances  Get
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Finance"
+    post:
+      tags:
+      - finances
+      summary: Create
+      operationId: create_finances__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Finance"
+        required: true
+      responses:
+        '201':
+          description: Create a new finance
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Finance"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  "/finances/{id}":
+    get:
+      tags:
+      - finances
+      summary: Get By Id
+      operationId: get_by_id_finances__id__get
+      parameters:
+      - required: true
+        schema:
+          title: Id
+          type: string
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Get single finance by id
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Finance"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+    put:
+      tags:
+      - finances
+      summary: Update
+      operationId: update_finances__id__put
+      parameters:
+      - required: true
+        schema:
+          title: Id
+          type: string
+        name: id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/FinanceUpdate"
+        required: true
+      responses:
+        '202':
+          description: Update a finance
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Finance"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+    delete:
+      tags:
+      - finances
+      summary: Delete
+      operationId: delete_finances__id__delete
+      parameters:
+      - required: true
+        schema:
+          title: Id
+          type: string
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Delete a finance
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  "/finances/type/{finance_type}":
+    get:
+      tags:
+      - finances
+      summary: Get By Type
+      operationId: get_by_type_finances_type__finance_type__get
+      parameters:
+      - required: true
+        schema:
+          "$ref": "#/components/schemas/FinanceType"
+        name: finance_type
+        in: path
+      responses:
+        '200':
+          description: Get finances by type
+          content:
+            application/json:
+              schema:
+                title: Response Get By Type Finances Type  Finance Type  Get
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Finance"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
 components:
   schemas:
     DailyToDo:
@@ -327,7 +476,6 @@ components:
           type: string
           default: 21-09-2022
       example:
-        _id: 066de609-b04a-4b30-b46c-32537c7f1f6e
         task: Abwaschen
         status: open
         task_date: '2022-09-14'
@@ -351,6 +499,54 @@ components:
         status:
           "$ref": "#/components/schemas/DailyToDoStatus"
       description: 'DailyToDoUpdate(task: Optional[str], status: Optional[lifestyle.models.daily_todo.DailyToDoStatus])'
+    Finance:
+      title: Finance
+      required:
+      - name
+      - amount
+      - type
+      type: object
+      properties:
+        _id:
+          title: " Id"
+          type: string
+        name:
+          title: Name
+          type: string
+        amount:
+          title: Amount
+          type: number
+        type:
+          "$ref": "#/components/schemas/FinanceType"
+      example:
+        name: Fressnapf
+        amount: 10
+        type: INCOME
+    FinanceType:
+      title: FinanceType
+      enum:
+      - INCOME
+      - EXPENDITUR
+      type: string
+      description: An enumeration.
+    FinanceUpdate:
+      title: FinanceUpdate
+      required:
+      - name
+      - amount
+      - type
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+        amount:
+          title: Amount
+          type: number
+        type:
+          "$ref": "#/components/schemas/FinanceType"
+      description: 'FinanceUpdate(name: Optional[str], amount: Optional[float], type:
+        Optional[lifestyle.models.finances.FinanceType])'
     HTTPValidationError:
       title: HTTPValidationError
       type: object
@@ -406,7 +602,6 @@ components:
           type: string
           default: Sunday
       example:
-        _id: 066de609-b04a-4b30-b46c-32537c7f1f6e
         task: nächstes Kapitel schreiben
         status: open
         task_week: '38'

@@ -21,7 +21,6 @@ class DailyToDo(BaseModel):
         allow_population_by_field_name = True
         schema_extra = {
             "example": {
-                "_id": "066de609-b04a-4b30-b46c-32537c7f1f6e",
                 "task": "Abwaschen",
                 "status": "open",
                 "task_date": "2022-09-14",
