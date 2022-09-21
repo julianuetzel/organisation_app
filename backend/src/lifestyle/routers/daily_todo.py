@@ -23,24 +23,34 @@ async def get_all(request: Request):
 @router.get(
     "/{id}",
     response_description="Get a single daily_todo by id",
-    response_model=DailyToDo
+    response_model=DailyToDo,
 )
 async def get_by_id(request: Request, id: str):
-    if(daily_todo := request.app.database["daily_todos"].find_one({"_id": id})) is not None:
+    if (
+        daily_todo := request.app.database["daily_todos"].find_one({"_id": id})
+    ) is not None:
         return daily_todo
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"daily_todo with ID {id} not found!")
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail=f"daily_todo with ID {id} not found!",
+    )
 
 
 @router.get(
     "/date/{task_date}",
     response_description="Get all daily_todos for the day",
-    response_model=List[DailyToDo]
+    response_model=List[DailyToDo],
 )
 async def get_by_date(request: Request, task_date: str):
-    daily_todos = list(request.app.database["daily_todos"].find({"task_date": task_date}))
+    daily_todos = list(
+        request.app.database["daily_todos"].find({"task_date": task_date})
+    )
     if daily_todos is not None:
         return daily_todos
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"daily_todos of date {task_date} not found!")
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail=f"daily_todos of date {task_date} not found!",
+    )
 
 
 @router.post(
@@ -65,22 +75,26 @@ async def create(request: Request, daily_todo: DailyToDo = Body(...)):
     status_code=status.HTTP_202_ACCEPTED,
     response_model=DailyToDo,
 )
-async def update(request: Request, id: str, daily_todo_update: DailyToDoUpdate = Body(...)):
+async def update(
+    request: Request, id: str, daily_todo_update: DailyToDoUpdate = Body(...)
+):
     if request.app.database["daily_todos"].find_one({"_id": id}) is not None:
         request.app.database["daily_todos"].update_one(
-            {"_id": id}, {"$set": asdict(daily_todo_update, dict_factory=general_asdict_factory)}
+            {"_id": id},
+            {"$set": asdict(daily_todo_update, dict_factory=general_asdict_factory)},
         )
-    if(
+    if (
         daily_todo := request.app.database["daily_todos"].find_one({"_id": id})
     ) is not None:
         return daily_todo
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"DailyToDo with ID {id} not found")
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail=f"DailyToDo with ID {id} not found",
+    )
 
 
 @router.delete(
-    "/{id}",
-    response_description="Delete a daily_todo",
-    status_code=status.HTTP_200_OK
+    "/{id}", response_description="Delete a daily_todo", status_code=status.HTTP_200_OK
 )
 async def delete(request: Request, id: str, response: Response):
     delete_result = request.app.database["daily_todos"].delete_one({"_id": id})
@@ -89,4 +103,7 @@ async def delete(request: Request, id: str, response: Response):
         response.status_code = status.HTTP_204_NO_CONTENT
         return response
 
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"DailyToDo with ID {id} not found")
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail=f"DailyToDo with ID {id} not found",
+    )
