@@ -25,13 +25,10 @@ async def get_all(request: Request):
     response_model=Finance,
 )
 async def get_by_id(request: Request, id: str):
-    if (
-        finance := request.app.database["finances"].find_one({"_id": id})
-    ) is not None:
+    if (finance := request.app.database["finances"].find_one({"_id": id})) is not None:
         return finance
     raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND,
-        detail=f"finance with ID {id} not found!"
+        status_code=status.HTTP_404_NOT_FOUND, detail=f"finance with ID {id} not found!"
     )
 
 
@@ -42,12 +39,14 @@ async def get_by_id(request: Request, id: str):
 )
 async def get_by_type(request: Request, finance_type: FinanceType):
     if (
-        finances := list(request.app.database["finances"].find({"type": finance_type.value}))
+        finances := list(
+            request.app.database["finances"].find({"type": finance_type.value})
+        )
     ) is not None:
         return finances
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
-        detail=f"No finances with type {finance_type} found!"
+        detail=f"No finances with type {finance_type} found!",
     )
 
 
@@ -72,17 +71,13 @@ async def create(request: Request, finance: Finance = Body(...)):
     status_code=status.HTTP_202_ACCEPTED,
     response_model=Finance,
 )
-async def update(
-    request: Request, id: str, finance_update: FinanceUpdate = Body(...)
-):
+async def update(request: Request, id: str, finance_update: FinanceUpdate = Body(...)):
     if request.app.database["finances"].find_one({"_id": id}) is not None:
         request.app.database["finances"].update_one(
             {"_id": id},
             {"$set": asdict(finance_update, dict_factory=general_asdict_factory)},
         )
-    if (
-        finance := request.app.database["finances"].find_one({"_id": id})
-    ) is not None:
+    if (finance := request.app.database["finances"].find_one({"_id": id})) is not None:
         return finance
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,

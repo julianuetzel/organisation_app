@@ -15,6 +15,7 @@ app.include_router(daily_todo_router)
 app.include_router(weekly_todo_router)
 app.include_router(finance_router)
 
+
 @app.on_event("startup")
 def on_startup():
     app.mongodb_client = MongoClient(config["SERVER_URI"])

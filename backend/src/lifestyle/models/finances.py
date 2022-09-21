@@ -20,11 +20,7 @@ class Finance(BaseModel):
     class Config:
         allow_population_by_field_name = True
         schema_extra = {
-            "example": {
-                "name": "Fressnapf",
-                "amount": 10.00,
-                "type": "INCOME"
-            }
+            "example": {"name": "Fressnapf", "amount": 10.00, "type": "INCOME"}
         }
 
 
@@ -36,4 +32,6 @@ class FinanceUpdate:
 
     class Config:
         allow_population_by_field_name = True
-        schema_extra = {"example": {"name": "Amazon", "amount": "10.50", "type": "EXPENDITUR"}}
+        schema_extra = {
+            "example": {"name": "Amazon", "amount": "10.50", "type": "EXPENDITUR"}
+        }
