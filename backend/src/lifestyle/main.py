@@ -3,13 +3,15 @@ from fastapi import FastAPI
 from pymongo import MongoClient
 from dotenv import dotenv_values
 
-from lifestyle.routers.daily_todo import router as daily_tod_router
+from lifestyle.routers.daily_todo import router as daily_todo_router
+from lifestyle.routers.weekly_todo import router as weekly_todo_router
 
 config = dict(dotenv_values("lifestyle/.env"))
 
 app = FastAPI()
 
-app.include_router(daily_tod_router)
+app.include_router(daily_todo_router)
+app.include_router(weekly_todo_router)
 
 
 @app.on_event("startup")
