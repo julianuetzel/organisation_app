@@ -1,41 +1,44 @@
-import datetime
+from dataclasses import dataclass
+from datetime import date
 import uuid
 from enum import Enum
 from typing import Optional
 from pydantic import BaseModel, Field
 
 
-class DailyTodoStatus(Enum):
-    Open = "Open"
-    Closed = "Closed"
+class DailyToDoStatus(str, Enum):
+    open = "open"
+    closed = "closed"
 
 
 class DailyToDo(BaseModel):
-    id: str = Field(default_factory=uuid.uuid4)
+    id: str = Field(default_factory=uuid.uuid4, alias="_id")
     task: str = Field(...)
-    status: DailyTodoStatus = Field(default=DailyTodoStatus.Open)
-    date: str = Field(default_factory=datetime.date.today())
+    status: DailyToDoStatus = Field(default=DailyToDoStatus.open)
+    task_date: str = Field(default=date.today().strftime('%d-%m-%Y'))
 
     class Config:
         allow_population_by_field_name = True
         schema_extra = {
             "example": {
-                "id": "1",
+                "_id": "066de609-b04a-4b30-b46c-32537c7f1f6e",
                 "task": "Abwaschen",
-                "status": "Open",
-                "date": "2022-09-14"
+                "status": "open",
+                "task_date": "2022-09-14"
             }
         }
 
 
-class DailyToDoUpdate(BaseModel):
+@dataclass()
+class DailyToDoUpdate:
     task: Optional[str]
-    status: Optional[DailyTodoStatus]
+    status: Optional[DailyToDoStatus]
 
     class Config:
+        allow_population_by_field_name = True
         schema_extra = {
             "example": {
                 "task": "Abwaschen",
-                "status": "Done"
+                "status": "closed"
             }
         }

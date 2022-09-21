@@ -1,23 +1,21 @@
 import uvicorn
 from fastapi import FastAPI
-from dotenv import dotenv_values
 from pymongo import MongoClient
+from dotenv import dotenv_values
 
-from lifestyle.routers.daily_todo import daily_todo_router
+from lifestyle.routers.daily_todo import router as daily_tod_router
 
-config = dotenv_values(".env")
+config = dict(dotenv_values("lifestyle/.env"))
 
 app = FastAPI()
 
-
-app.include_router(daily_todo_router)
+app.include_router(daily_tod_router)
 
 
 @app.on_event("startup")
 def on_startup():
-    app.mongodb_client = MongoClient(config["ATLAS_URI"])
+    app.mongodb_client = MongoClient(config["SERVER_URI"])
     app.database = app.mongodb_client[config["DB_NAME"]]
-    print("Connected to the MongoDB database!")
 
 
 @app.on_event("shutdown")
