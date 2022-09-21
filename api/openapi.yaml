@@ -1,0 +1,229 @@
+openapi: 3.0.2
+info:
+  title: FastAPI
+  version: 0.1.0
+paths:
+  /daily-todos/:
+    get:
+      tags:
+      - daily-todos
+      summary: Get Daily Todos
+      operationId: get_daily_todos_daily_todos__get
+      responses:
+        '200':
+          description: Get all daily_todos
+          content:
+            application/json:
+              schema:
+                title: Response Get Daily Todos Daily Todos  Get
+                type: array
+                items:
+                  "$ref": "#/components/schemas/DailyToDo"
+    post:
+      tags:
+      - daily-todos
+      summary: Create Daily Todo
+      operationId: create_daily_todo_daily_todos__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/DailyToDo"
+        required: true
+      responses:
+        '201':
+          description: Create a new daily_todo
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DailyToDo"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  /daily-todos/{id}:
+    get:
+      tags:
+      - daily-todos
+      summary: Find Daily Todo
+      operationId: find_daily_todo_daily_todos__id__get
+      parameters:
+      - required: true
+        schema:
+          title: Id
+          type: string
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Get a single daily_todo by id
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DailyToDo"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+    put:
+      tags:
+      - daily-todos
+      summary: Update Daily Todo
+      operationId: update_daily_todo_daily_todos__id__put
+      parameters:
+      - required: true
+        schema:
+          title: Id
+          type: string
+        name: id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/DailyToDoUpdate"
+        required: true
+      responses:
+        '202':
+          description: Update a daily_todo
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DailyToDo"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+    delete:
+      tags:
+      - daily-todos
+      summary: Delete Daily Todo
+      operationId: delete_daily_todo_daily_todos__id__delete
+      parameters:
+      - required: true
+        schema:
+          title: Id
+          type: string
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Delete a daily_todo
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  /daily-todos/{date}:
+    get:
+      tags:
+      - daily-todos
+      summary: Find Daily Todos
+      operationId: find_daily_todos_daily_todos__date__get
+      parameters:
+      - required: true
+        schema:
+          title: Date
+          type: string
+        name: date
+        in: path
+      responses:
+        '200':
+          description: Get all daily_todos for the day
+          content:
+            application/json:
+              schema:
+                title: Response Find Daily Todos Daily Todos  Date  Get
+                type: array
+                items:
+                  "$ref": "#/components/schemas/DailyToDo"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+components:
+  schemas:
+    DailyToDo:
+      title: DailyToDo
+      required:
+      - task
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+        task:
+          title: Task
+          type: string
+        status:
+          allOf:
+          - "$ref": "#/components/schemas/DailyTodoStatus"
+          default: Open
+        date:
+          title: Date
+          type: string
+      example:
+        id: '1'
+        task: Abwaschen
+        status: Open
+        date: '2022-09-14'
+    DailyToDoUpdate:
+      title: DailyToDoUpdate
+      type: object
+      properties:
+        task:
+          title: Task
+          type: string
+        status:
+          "$ref": "#/components/schemas/DailyTodoStatus"
+      example:
+        task: Abwaschen
+        status: Done
+    DailyTodoStatus:
+      title: DailyTodoStatus
+      enum:
+      - Open
+      - Closed
+      description: An enumeration.
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            "$ref": "#/components/schemas/ValidationError"
+    ValidationError:
+      title: ValidationError
+      required:
+      - loc
+      - msg
+      - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
