@@ -68,7 +68,6 @@ async def create(request: Request, daily_todo: DailyToDo = Body(...)):
     return created_daily_todo
 
 
-# TODO
 @router.put(
     "/{id}",
     response_description="Update a daily_todo",
@@ -89,7 +88,7 @@ async def update(
         return daily_todo
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
-        detail=f"DailyToDo with ID {id} not found",
+        detail=f"daily_todo with ID {id} not found!",
     )
 
 
@@ -105,5 +104,5 @@ async def delete(request: Request, id: str, response: Response):
 
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
-        detail=f"DailyToDo with ID {id} not found",
+        detail=f"daily_todo with ID {id} not found!",
     )

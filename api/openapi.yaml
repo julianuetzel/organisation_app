@@ -1,29 +1,30 @@
+---
 openapi: 3.0.2
 info:
   title: FastAPI
   version: 0.1.0
 paths:
-  /daily-todos/:
+  "/daily-todos/":
     get:
       tags:
       - daily-todos
-      summary: Get Daily Todos
-      operationId: get_daily_todos_daily_todos__get
+      summary: Get All
+      operationId: get_all_daily_todos__get
       responses:
         '200':
           description: Get all daily_todos
           content:
             application/json:
               schema:
-                title: Response Get Daily Todos Daily Todos  Get
+                title: Response Get All Daily Todos  Get
                 type: array
                 items:
                   "$ref": "#/components/schemas/DailyToDo"
     post:
       tags:
       - daily-todos
-      summary: Create Daily Todo
-      operationId: create_daily_todo_daily_todos__post
+      summary: Create
+      operationId: create_daily_todos__post
       requestBody:
         content:
           application/json:
@@ -43,12 +44,12 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/HTTPValidationError"
-  /daily-todos/{id}:
+  "/daily-todos/{id}":
     get:
       tags:
       - daily-todos
-      summary: Find Daily Todo
-      operationId: find_daily_todo_daily_todos__id__get
+      summary: Get By Id
+      operationId: get_by_id_daily_todos__id__get
       parameters:
       - required: true
         schema:
@@ -72,8 +73,8 @@ paths:
     put:
       tags:
       - daily-todos
-      summary: Update Daily Todo
-      operationId: update_daily_todo_daily_todos__id__put
+      summary: Update
+      operationId: update_daily_todos__id__put
       parameters:
       - required: true
         schema:
@@ -103,8 +104,8 @@ paths:
     delete:
       tags:
       - daily-todos
-      summary: Delete Daily Todo
-      operationId: delete_daily_todo_daily_todos__id__delete
+      summary: Delete
+      operationId: delete_daily_todos__id__delete
       parameters:
       - required: true
         schema:
@@ -124,18 +125,18 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/HTTPValidationError"
-  /daily-todos/{date}:
+  "/daily-todos/date/{task_date}":
     get:
       tags:
       - daily-todos
-      summary: Find Daily Todos
-      operationId: find_daily_todos_daily_todos__date__get
+      summary: Get By Date
+      operationId: get_by_date_daily_todos_date__task_date__get
       parameters:
       - required: true
         schema:
-          title: Date
+          title: Task Date
           type: string
-        name: date
+        name: task_date
         in: path
       responses:
         '200':
@@ -143,10 +144,160 @@ paths:
           content:
             application/json:
               schema:
-                title: Response Find Daily Todos Daily Todos  Date  Get
+                title: Response Get By Date Daily Todos Date  Task Date  Get
                 type: array
                 items:
                   "$ref": "#/components/schemas/DailyToDo"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  "/weekly-todos/":
+    get:
+      tags:
+      - weekly-todos
+      summary: Get All
+      operationId: get_all_weekly_todos__get
+      responses:
+        '200':
+          description: Get all weekly_todos
+          content:
+            application/json:
+              schema:
+                title: Response Get All Weekly Todos  Get
+                type: array
+                items:
+                  "$ref": "#/components/schemas/WeeklyToDo"
+    post:
+      tags:
+      - weekly-todos
+      summary: Create
+      operationId: create_weekly_todos__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/WeeklyToDo"
+        required: true
+      responses:
+        '201':
+          description: Create a new weekly_todo
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/WeeklyToDo"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  "/weekly-todos/{id}":
+    get:
+      tags:
+      - weekly-todos
+      summary: Get By Id
+      operationId: get_by_id_weekly_todos__id__get
+      parameters:
+      - required: true
+        schema:
+          title: Id
+          type: string
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Get a single weekly_todo by id
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/WeeklyToDo"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+    put:
+      tags:
+      - weekly-todos
+      summary: Update
+      operationId: update_weekly_todos__id__put
+      parameters:
+      - required: true
+        schema:
+          title: Id
+          type: string
+        name: id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/WeeklyToDoUpdate"
+        required: true
+      responses:
+        '202':
+          description: Update a weekly_todo
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/WeeklyToDo"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+    delete:
+      tags:
+      - weekly-todos
+      summary: Delete
+      operationId: delete_weekly_todos__id__delete
+      parameters:
+      - required: true
+        schema:
+          title: Id
+          type: string
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Delete a weekly_todo
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  "/weekly-todos/week/{task_week}":
+    get:
+      tags:
+      - weekly-todos
+      summary: Get By Week
+      operationId: get_by_week_weekly_todos_week__task_week__get
+      parameters:
+      - required: true
+        schema:
+          title: Task Week
+          type: string
+        name: task_week
+        in: path
+      responses:
+        '200':
+          description: Get all weekly_todos for the week
+          content:
+            application/json:
+              schema:
+                title: Response Get By Week Weekly Todos Week  Task Week  Get
+                type: array
+                items:
+                  "$ref": "#/components/schemas/WeeklyToDo"
         '422':
           description: Validation Error
           content:
@@ -161,42 +312,45 @@ components:
       - task
       type: object
       properties:
-        id:
-          title: Id
+        _id:
+          title: " Id"
           type: string
         task:
           title: Task
           type: string
         status:
           allOf:
-          - "$ref": "#/components/schemas/DailyTodoStatus"
-          default: Open
-        date:
-          title: Date
+          - "$ref": "#/components/schemas/DailyToDoStatus"
+          default: open
+        task_date:
+          title: Task Date
           type: string
+          default: 21-09-2022
       example:
-        id: '1'
+        _id: 066de609-b04a-4b30-b46c-32537c7f1f6e
         task: Abwaschen
-        status: Open
-        date: '2022-09-14'
+        status: open
+        task_date: '2022-09-14'
+    DailyToDoStatus:
+      title: DailyToDoStatus
+      enum:
+      - open
+      - closed
+      type: string
+      description: An enumeration.
     DailyToDoUpdate:
       title: DailyToDoUpdate
+      required:
+      - task
+      - status
       type: object
       properties:
         task:
           title: Task
           type: string
         status:
-          "$ref": "#/components/schemas/DailyTodoStatus"
-      example:
-        task: Abwaschen
-        status: Done
-    DailyTodoStatus:
-      title: DailyTodoStatus
-      enum:
-      - Open
-      - Closed
-      description: An enumeration.
+          "$ref": "#/components/schemas/DailyToDoStatus"
+      description: 'DailyToDoUpdate(task: Optional[str], status: Optional[lifestyle.models.daily_todo.DailyToDoStatus])'
     HTTPValidationError:
       title: HTTPValidationError
       type: object
@@ -227,3 +381,62 @@ components:
         type:
           title: Error Type
           type: string
+    WeeklyToDo:
+      title: WeeklyToDo
+      required:
+      - task
+      type: object
+      properties:
+        _id:
+          title: " Id"
+          type: string
+        task:
+          title: Task
+          type: string
+        status:
+          allOf:
+          - "$ref": "#/components/schemas/WeeklyToDoStatus"
+          default: open
+        task_week:
+          title: Task Week
+          type: string
+          default: 38
+        done_by:
+          title: Done By
+          type: string
+          default: Sunday
+      example:
+        _id: 066de609-b04a-4b30-b46c-32537c7f1f6e
+        task: nächstes Kapitel schreiben
+        status: open
+        task_week: '38'
+        done_by: Sonntag
+    WeeklyToDoStatus:
+      title: WeeklyToDoStatus
+      enum:
+      - open
+      - closed
+      type: string
+      description: An enumeration.
+    WeeklyToDoUpdate:
+      title: WeeklyToDoUpdate
+      required:
+      - task
+      - status
+      - task_week
+      - done_by
+      type: object
+      properties:
+        task:
+          title: Task
+          type: string
+        status:
+          "$ref": "#/components/schemas/WeeklyToDoStatus"
+        task_week:
+          title: Task Week
+          type: string
+        done_by:
+          title: Done By
+          type: string
+      description: 'WeeklyToDoUpdate(task: Optional[str], status: Optional[lifestyle.models.weekly_todo.WeeklyToDoStatus],
+        task_week: Optional[str], done_by: Optional[str])'
