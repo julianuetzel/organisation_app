@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { TodoService } from '../todo.service';
-import { ToDo } from './todo';
+import { Component, OnInit } from '@angular/core';
+import { DailyTodoService } from '../dailytodo.service';
+import { DailyToDo, DailyToDoStatus } from './daily-todo';
 
 
 @Component({
@@ -10,27 +10,53 @@ import { ToDo } from './todo';
 })
 export class DailyTodoComponent implements OnInit {
   date = new Date();
-  todos: ToDo[] = [];
+  daily_todos: DailyToDo[] = [];
+  task!: DailyToDo['task'];
+  checked: DailyToDo['status'] = DailyToDoStatus.open
 
-  constructor(private todoService: TodoService) { }
-
+  constructor(private dailytodoService: DailyTodoService) { }
+  
   ngOnInit(): void {
+    this.getDailyTodosByDate(this.date_today());
+  }
+
+  getDailyTodosByDate(date: string): void {
+    this.dailytodoService.get_by_date(date)
+    .subscribe(daily_todos => this.daily_todos = daily_todos);
+    console.log(this.daily_todos.values)
   }
 
   date_today(): string {
     return this.date.toLocaleDateString()
   }
+
+  change_status(status: DailyToDo['status']): void {
+    if (status == DailyToDoStatus.closed) status = DailyToDoStatus.open;
+    else status = DailyToDoStatus.closed;
+  }
   
-  getTodos(): void {
-    this.todoService.getTodos().subscribe(todos => this.todos = todos);
+  getDailyTodos(): DailyToDo[] {
+    this.dailytodoService.get_by_date(this.date_today()).subscribe(daily_todos => this.daily_todos = daily_todos);
+    return this.daily_todos
   }
 
-  add(task: string): void {
+  addDailyTodo(task: string): void {
+
     task = task.trim();
+
     if (!task) { return; };
-    this.todoService.addTodo( {task} as ToDo)
+
+    let new_daily_todo : DailyToDo = {
+      id: "",
+      task: task,
+      status: DailyToDoStatus.open,
+      task_date: this.date_today(),
+    }; 
+
+    this.dailytodoService.create( new_daily_todo as DailyToDo )
       .subscribe(todo => {
-        this.todos.push(todo)
+        this.daily_todos.push(todo)
       });
   }
+
 }

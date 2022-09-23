@@ -15,7 +15,7 @@ class DailyToDo(BaseModel):
     id: str = Field(default_factory=uuid.uuid4, alias="_id")
     task: str = Field(...)
     status: DailyToDoStatus = Field(default=DailyToDoStatus.open)
-    task_date: str = Field(default=date.today().strftime("%d-%m-%Y"))
+    task_date: str = Field(default=date.today().strftime("%d.%m.%Y"))
 
     class Config:
         allow_population_by_field_name = True
@@ -23,7 +23,7 @@ class DailyToDo(BaseModel):
             "example": {
                 "task": "Abwaschen",
                 "status": "open",
-                "task_date": "2022-09-14",
+                "task_date": "2022.09.14",
             }
         }
 
