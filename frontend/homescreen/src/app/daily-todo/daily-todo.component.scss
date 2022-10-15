@@ -6,18 +6,23 @@ mat-card {
     text-align: left;
 }
 
-.flex-container {
+.button-row {
     display: flex;
-
     flex-flow: row wrap;
-    
     justify-content: space-around;
-
     align-items: flex-start;
-    
     padding-top: 5%;
     margin: 5% 10% 20% 10%;
     list-style: none;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: flex-start;
+    padding-top: 5%;
+    margin: 5% 10% 20% 10%;
   }
 
   mat-checkbox {
