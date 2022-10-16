@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatCardModule } from '@angular/material/card'
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatButtonModule } from '@angular/material/button'
 import { MatDividerModule } from '@angular/material/divider';
@@ -52,6 +53,7 @@ import { WeeklyTodoComponent } from './weekly-todo/weekly-todo.component';
     MatDividerModule,
     MatListModule,
     MatIconModule,
+    MatProgressSpinnerModule,
     MatSidenavModule,
     MatInputModule,
     FlexLayoutModule,

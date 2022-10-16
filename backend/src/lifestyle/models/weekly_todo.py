@@ -7,15 +7,10 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 
-class WeeklyToDoStatus(str, Enum):
-    open = "open"
-    closed = "closed"
-
-
 class WeeklyToDo(BaseModel):
     id: str = Field(default_factory=uuid.uuid4, alias="_id")
     task: str = Field(...)
-    status: WeeklyToDoStatus = Field(default=WeeklyToDoStatus.open)
+    status: bool = Field(default=False)
     task_week: str = Field(default=date.today().isocalendar()[1])
     done_by: str = Field(default="Sunday")
 
@@ -24,7 +19,7 @@ class WeeklyToDo(BaseModel):
         schema_extra = {
             "example": {
                 "task": "nächstes Kapitel schreiben",
-                "status": "open",
+                "done": "False",
                 "task_week": "38",
                 "done_by": "Sonntag",
             }
@@ -34,7 +29,7 @@ class WeeklyToDo(BaseModel):
 @dataclass()
 class WeeklyToDoUpdate:
     task: Optional[str]
-    status: Optional[WeeklyToDoStatus]
+    status: Optional[bool]
     task_week: Optional[str]
     done_by: Optional[str]
 
@@ -43,7 +38,7 @@ class WeeklyToDoUpdate:
         schema_extra = {
             "example": {
                 "task": "nächstes Kapitel schreiben",
-                "status": "open",
+                "done": "False",
                 "task_week": "39",
                 "done_by": "Mittwoch",
             }

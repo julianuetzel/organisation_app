@@ -47,18 +47,18 @@ export class WeeklyTodoComponent implements OnInit {
     this.weeklytodoService.get_by_date(this.this_week()).subscribe(weekly_todos => this.weekly_todos = weekly_todos);
   }
 
-  addWeeklyTodo(task: string, value: string): void {
+  addWeeklyTodo(task: string, done_by: string): void {
 
     task = task.trim();
 
     if (!task) { return; };
 
     let new_weekly_todo : WeeklyToDo = {
-      id: uuidv4(),
+      id: "",
       task: task,
       status: WeeklyToDoStatus.open,
       task_week: this.this_week(),
-      done_by: value,
+      done_by: done_by,
     }; 
 
     this.weeklytodoService.create( new_weekly_todo as WeeklyToDo )

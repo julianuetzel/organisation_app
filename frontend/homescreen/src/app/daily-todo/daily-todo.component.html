@@ -6,9 +6,9 @@
         <span>{{date_today()}}</span>
         <button mat-button>Morgen</button>
 
-        <mat-card>
+        <mat-card class="card-list">
             <li *ngFor="let daily_todo of daily_todos" class="list">
-                <mat-checkbox [checked]="daily_todo.done" (click)="updateDailyTodoStatus(daily_todo)">
+                <mat-checkbox [checked]="daily_todo.done" (click)="updateDailyTodoStatus(daily_todo); progress()">
                     <span (dblclick)="updateDailyTodoTask(daily_todo)">{{daily_todo.task}}</span>
                 </mat-checkbox>
                 <mat-icon mat-icon-button (click)="deleteDailyTodo(daily_todo)">clear</mat-icon>
@@ -20,6 +20,14 @@
             <button *ngIf="task" mat-icon-button (click)="addDailyTodo(task.value); task.value=''">
                 <mat-icon>add_task</mat-icon>
             </button>
-        </mat-card>
-
+        </mat-card>       
+        <div class="progress-spinner">
+            <h1>Progress:</h1>
+            <mat-progress-spinner
+                class="example-margin"
+                color="primary"
+                [mode]="mode"
+                [value]="progress()">
+            </mat-progress-spinner>
+        </div>
     </div> 

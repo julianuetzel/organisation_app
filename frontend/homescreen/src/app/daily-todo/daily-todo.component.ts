@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { DailyTodoService } from '../dailytodo.service';
 import { DailyToDo, DailyToDoUpdate } from './daily-todo';
 
@@ -12,12 +13,14 @@ import { DailyToDo, DailyToDoUpdate } from './daily-todo';
 export class DailyTodoComponent implements OnInit {
   date = new Date();
   daily_todo: DailyToDo | undefined;
-  daily_todos: DailyToDo[] = [] ;
+  daily_todos: DailyToDo[] = [];
+  mode: ProgressSpinnerMode = 'determinate';
 
   constructor(private dailytodoService: DailyTodoService) { }
   
   ngOnInit(): void {
     this.getDailyTodosByDate(this.formatDate(this.date));
+    console.log(this.formatDate(this.date))
   }
 
   date_today(): string {
@@ -73,18 +76,20 @@ export class DailyTodoComponent implements OnInit {
   }
 
   updateDailyTodoStatus(daily_todo: DailyToDo): void {
-    if (this.daily_todo) {
-      if (daily_todo.done) daily_todo.done = false;
-      else daily_todo.done = true;
+    var updated_daily_todo = this.daily_todos.find(d_todo => d_todo.id == daily_todo.id)
+
+    if (updated_daily_todo !== undefined) {
 
       let updated_daily_todo : DailyToDoUpdate = {
         task: daily_todo.task,
-        done: daily_todo.done,
-      };
+        done: !daily_todo.done,
+      }
 
-      this.daily_todos = this.daily_todos.filter(d_todo => d_todo !== daily_todo);
       this.dailytodoService.update(daily_todo.id, updated_daily_todo)
-        .subscribe()
+        .subscribe(daily_todo => {
+          this.daily_todos.push(daily_todo)
+        })
+      this.daily_todos.filter(d_todo => d_todo.id == daily_todo.id).pop()
     }
   }
 
@@ -107,4 +112,11 @@ export class DailyTodoComponent implements OnInit {
       .subscribe()
   }
 
+  progress(): number{
+    var i = 0;
+    for (var daily_todo of this.daily_todos)  {
+      if (daily_todo.done) i++;
+    }
+    return (i*100/this.daily_todos.length)    
+  }
 }
