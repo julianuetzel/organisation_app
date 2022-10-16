@@ -1,0 +1,25 @@
+mat-card {
+    height: 500%;
+    width: 200%;
+    background-color: lightcoral;
+    color: black;
+    text-align: left;
+}
+
+.flex-container {
+    display: flex;
+
+    flex-flow: row wrap;
+    
+    justify-content: space-around;
+
+    align-items: flex-start;
+    
+    padding-top: 5%;
+    margin: 5% 10% 20% 10%;
+    list-style: none;
+  }
+
+  mat-checkbox {
+    margin: 0 10 px;
+}

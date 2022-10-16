@@ -16,6 +16,7 @@ class Finance(BaseModel):
     name: str = Field(...)
     amount: float = Field(...)
     type: FinanceType = Field(...)
+    repetitive: bool = Field(default=False)
 
     class Config:
         allow_population_by_field_name = True
@@ -29,9 +30,10 @@ class FinanceUpdate:
     name: Optional[str]
     amount: Optional[float]
     type: Optional[FinanceType]
+    repetitive: bool = Field(default=False)
 
     class Config:
         allow_population_by_field_name = True
         schema_extra = {
-            "example": {"name": "Amazon", "amount": "10.50", "type": "EXPENDITUR"}
+            "example": {"name": "Amazon", "amount": "10.50", "type": "EXPENDITUR", "repetitive": "True"}
         }

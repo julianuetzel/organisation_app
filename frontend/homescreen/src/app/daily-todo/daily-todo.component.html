@@ -1,22 +1,33 @@
 <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 </head>
+    <div class="button-row">
+        <button mat-button>Gestern</button>
+        <span>{{date_today()}}</span>
+        <button mat-button>Morgen</button>
 
-<div justify-content="flex-start">
-    <button mat-button>Gestern</button>
-    <span>{{date_today()}}</span>
-    <button mat-button>Morgen</button>
-    <mat-card>
-        <li *ngFor="let todo of todos">
-            <span>{{todo.task}}</span>
-        </li>
-        <mat-form-field appearance="fill">
-            <input matInput type="text" id="new-task" placeholder="weitere Aufgaben..." #todoTask/>
-            <button type="button" mat-button (click)="add(todoTask.value); todoTask.value=''">
-                <span class="material-symbols-outlined">
-                    add
-                </span>
+        <mat-card class="card-list">
+            <li *ngFor="let daily_todo of daily_todos" class="list">
+                <mat-checkbox [checked]="daily_todo.done" (click)="updateDailyTodoStatus(daily_todo); progress()">
+                    <span (dblclick)="updateDailyTodoTask(daily_todo)">{{daily_todo.task}}</span>
+                </mat-checkbox>
+                <mat-icon mat-icon-button (click)="deleteDailyTodo(daily_todo)">clear</mat-icon>
+            </li>
+            <mat-form-field appearance="fill">
+                <mat-label>neue Aufgabe</mat-label>
+                <input matInput #task>
+            </mat-form-field>
+            <button *ngIf="task" mat-icon-button (click)="addDailyTodo(task.value); task.value=''">
+                <mat-icon>add_task</mat-icon>
             </button>
-        </mat-form-field>
-    </mat-card>
-</div>
+        </mat-card>       
+        <div class="progress-spinner">
+            <h1>Progress:</h1>
+            <mat-progress-spinner
+                class="example-margin"
+                color="primary"
+                [mode]="mode"
+                [value]="progress()">
+            </mat-progress-spinner>
+        </div>
+    </div> 

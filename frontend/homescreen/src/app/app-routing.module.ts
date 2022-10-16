@@ -13,15 +13,15 @@ import { WeeklyTodoComponent } from './weekly-todo/weekly-todo.component';
 
 
 const routes: Routes = [
-  {path: 'daily_todo', component: DailyTodoComponent},
+  {path: 'daily-todos', component: DailyTodoComponent},
   {path: 'calendar', component: CalendarComponent},
   {path: 'finances', component: FinancesComponent},
-  {path: 'food_diary', component: FoodDiaryComponent},
+  {path: 'food-diary', component: FoodDiaryComponent},
   {path: 'hobbies', component: HobbiesComponent},
   {path: 'mood', component: MoodComponent},
-  {path: 'shopping_list', component: ShoppingListComponent},
-  {path: 'weekly_todo', component: WeeklyTodoComponent},
-  //{path: '', redirectTo: '', pathMatch: 'full'},
+  {path: 'shopping-list', component: ShoppingListComponent},
+  {path: 'weekly-todos', component: WeeklyTodoComponent},
+  {path: '', redirectTo: '', pathMatch: 'full'},
 ]
 @NgModule({
   declarations: [],

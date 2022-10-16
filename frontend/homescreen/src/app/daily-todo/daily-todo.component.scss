@@ -1,12 +1,34 @@
-mat-card {
+.card-list {
     height: 500%;
+    width: 200%;
     background-color: burlywood;
     color: black;
     text-align: left;
 }
 
-div {
-    position: absolute;
-    top: 0;
-    left: 40%;
+.button-row {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding-top: 5%;
+    margin: 5% 10% 20% 10%;
+    list-style: none;
+  }
+
+  .list {
+    display: flex;
+    align-items:flex-start;
+    justify-content: space-between;
+    padding-top: 5%;
+    margin: 0% 10% 0% 10%;
+  }
+
+  mat-checkbox {
+    margin: 0 10 px;
+}
+.progress-spinner {
+  align-self: flex-end;
+  padding-top: 5%;
+  margin: 5% 10% 20% 10%;
 }

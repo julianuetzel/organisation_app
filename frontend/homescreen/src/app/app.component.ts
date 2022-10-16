@@ -7,12 +7,14 @@ import { Component, OnDestroy } from '@angular/core';
 })
 export class AppComponent implements OnDestroy{
   title = 'LifeStyle';
+  date = new Date()
   
   showFiller=false;
    
   constructor(){
 
   }
+
   ngOnDestroy(): void {
   }
 }
