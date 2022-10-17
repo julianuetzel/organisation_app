@@ -19,22 +19,11 @@ export class DailyTodoComponent implements OnInit {
   constructor(private dailytodoService: DailyTodoService) { }
   
   ngOnInit(): void {
-    this.getDailyTodosByDate(this.formatDate(this.date));
-    console.log(this.formatDate(this.date))
+    this.getDailyTodosByDate(this.date_today());
   }
 
   date_today(): string {
     return this.date.toLocaleDateString()
-  }
-
-  formatDate(date: Date) {
-    return (
-      [
-        date.getFullYear(),
-        (date.getMonth() + 1).toString().padStart(2, '0'),
-        (date.getDate()).toString().padStart(2, '0'),
-      ].join('.')
-    );
   }
 
   getDailyTodosByDate(date: string): void {
