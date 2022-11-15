@@ -11,7 +11,7 @@
                 <mat-checkbox [checked]="daily_todo.done" (click)="updateDailyTodoStatus(daily_todo); progress()">
                     <span (dblclick)="updateDailyTodoTask(daily_todo)">{{daily_todo.task}}</span>
                 </mat-checkbox>
-                <mat-icon mat-icon-button (click)="deleteDailyTodo(daily_todo)">clear</mat-icon>
+                <mat-icon mat-icon-button (click)="deleteDailyTodo(daily_todo.id)">clear</mat-icon>
             </li>
             <mat-form-field appearance="fill">
                 <mat-label>neue Aufgabe</mat-label>

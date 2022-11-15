@@ -3,10 +3,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from './inMemoryDataService';
 
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatCardModule } from '@angular/material/card'
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatButtonModule } from '@angular/material/button'
 import { MatDividerModule } from '@angular/material/divider';
@@ -46,6 +48,9 @@ import { WeeklyTodoComponent } from './weekly-todo/weekly-todo.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false }
+    ),
     MatToolbarModule,
     MatCardModule,
     MatGridListModule,

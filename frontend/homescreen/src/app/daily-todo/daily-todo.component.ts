@@ -19,22 +19,15 @@ export class DailyTodoComponent implements OnInit {
   constructor(private dailytodoService: DailyTodoService) { }
   
   ngOnInit(): void {
-    this.getDailyTodosByDate(this.formatDate(this.date));
-    console.log(this.formatDate(this.date))
+    this.getDailyTodosByDate(this.date_today());
   }
 
   date_today(): string {
     return this.date.toLocaleDateString()
   }
 
-  formatDate(date: Date) {
-    return (
-      [
-        date.getFullYear(),
-        (date.getMonth() + 1).toString().padStart(2, '0'),
-        (date.getDate()).toString().padStart(2, '0'),
-      ].join('.')
-    );
+  genId(daily_todos: DailyToDo[]): number {
+    return daily_todos.length > 0 ? Math.max(...daily_todos.map(daily_todo => daily_todo.id)) + 1 : 11;
   }
 
   getDailyTodosByDate(date: string): void {
@@ -45,7 +38,7 @@ export class DailyTodoComponent implements OnInit {
     console.log(this.daily_todos.values, this.daily_todos)
   }
 
-  getDailyToDoById(id: string): void {
+  getDailyToDoById(id: number): void {
     this.dailytodoService.get_by_id(id)
       .subscribe((data: DailyToDo) =>  this.daily_todo = {
         ...data
@@ -62,7 +55,7 @@ export class DailyTodoComponent implements OnInit {
     task = task.trim(); 
     if (task) {
       let new_daily_todo : DailyToDo = {
-        id: "",
+        id: this.genId(this.daily_todos),
         task: task,
         done: false,
         task_date: this.date_today(),
@@ -76,39 +69,32 @@ export class DailyTodoComponent implements OnInit {
   }
 
   updateDailyTodoStatus(daily_todo: DailyToDo): void {
-    var updated_daily_todo = this.daily_todos.find(d_todo => d_todo.id == daily_todo.id)
-
-    if (updated_daily_todo !== undefined) {
-
-      let updated_daily_todo : DailyToDoUpdate = {
-        task: daily_todo.task,
-        done: !daily_todo.done,
-      }
-
-      this.dailytodoService.update(daily_todo.id, updated_daily_todo)
-        .subscribe(daily_todo => {
-          this.daily_todos.push(daily_todo)
-        })
-      this.daily_todos.filter(d_todo => d_todo.id == daily_todo.id).pop()
+    let updated_daily_todo : DailyToDo = {
+      id: daily_todo.id,
+      task: daily_todo.task,
+      done: !daily_todo.done,
+      task_date: daily_todo.task_date
     }
-  }
 
+    this.dailytodoService.update(updated_daily_todo)
+      .subscribe()
+  }
   updateDailyTodoTask(daily_todo: DailyToDo): void {
-    if (this.daily_todo) {
+/*     if (this.daily_todo) {
       let updated_daily_todo : DailyToDoUpdate = {
-        task: daily_todo.task,
+        id: daily_todo.id,
+        task: value.task,
         done: daily_todo.done,
+        task_date: daily_todo.task_date
       };
-
-      this.daily_todos = this.daily_todos.filter(d_todo => d_todo !== daily_todo);
-      this.dailytodoService.update(daily_todo.id, updated_daily_todo)
+      this.dailytodoService.update(updated_daily_todo)
         .subscribe()
-    }
-  }
+    } */
+  } 
 
-  deleteDailyTodo(daily_todo: DailyToDo): void {
-    this.daily_todos = this.daily_todos.filter(d_todo => d_todo !== daily_todo);
-    this.dailytodoService.delete(daily_todo.id)
+  deleteDailyTodo(id: number): void {
+    this.daily_todos = this.daily_todos.filter(d_todo => d_todo.id !== id);
+    this.dailytodoService.delete(id)
       .subscribe()
   }
 
