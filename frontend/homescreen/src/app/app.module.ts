@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from './inMemoryDataService';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -48,6 +50,9 @@ import { DialogComponent } from './daily-todo/dialog/dialog.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false }
+    ),
     MatToolbarModule,
     MatCardModule,
     MatDialogModule,
