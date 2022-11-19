@@ -1,24 +1,37 @@
 <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 </head>
-    <div class="button-row">
-        <button mat-button>Gestern</button>
-        <span>{{date_today()}}</span>
-        <button mat-button>Morgen</button>
+    <div class="daily-todo">
+        <div class="button-row">
+            <button mat-button (click)="day_before(date)">
+                <span class="material-symbols-outlined">
+                    arrow_back_ios
+                </span>
+            </button>
+            <span>{{print_date}}</span>
+            <button mat-button (click)="day_after(date)">
+                <span class="material-symbols-outlined">
+                    arrow_forward_ios
+                </span>
+            </button>
+        </div>
 
         <mat-card class="card-list">
             <li *ngFor="let daily_todo of daily_todos" class="list">
-                <mat-checkbox [checked]="daily_todo.done" (click)="updateDailyTodoStatus(daily_todo); progress()">
-                    <span (dblclick)="updateDailyTodoTask(daily_todo)">{{daily_todo.task}}</span>
+                <mat-checkbox [(ngModel)]="daily_todo.done" (click)="updateStatus(daily_todo); progress()">
+                    <span>{{daily_todo.task}}</span>
                 </mat-checkbox>
-                <mat-icon mat-icon-button (click)="deleteDailyTodo(daily_todo)">clear</mat-icon>
+                <div>
+                    <mat-icon mat-icon-button (click)="openDialog(daily_todo)">edit</mat-icon>
+                    <mat-icon mat-icon-button (click)="deleteDailyTodo(daily_todo)">clear</mat-icon>
+                </div>
             </li>
             <mat-form-field appearance="fill">
                 <mat-label>neue Aufgabe</mat-label>
                 <input matInput #task>
             </mat-form-field>
             <button *ngIf="task" mat-icon-button (click)="addDailyTodo(task.value); task.value=''">
-                <mat-icon>add_task</mat-icon>
+                <mat-icon>add</mat-icon>
             </button>
         </mat-card>       
         <div class="progress-spinner">

@@ -6,7 +6,7 @@
     text-align: left;
 }
 
-.button-row {
+.daily-todo {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
@@ -16,7 +16,18 @@
     list-style: none;
   }
 
-  .list {
+.button-row {
+  display: inline;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 2%;
+}
+
+mat-form-field {
+    margin: 5% 0% 0% 10%;
+  }
+
+.list {
     display: flex;
     align-items:flex-start;
     justify-content: space-between;
@@ -24,9 +35,10 @@
     margin: 0% 10% 0% 10%;
   }
 
-  mat-checkbox {
+mat-checkbox {
     margin: 0 10 px;
-}
+  }
+
 .progress-spinner {
   align-self: flex-end;
   padding-top: 5%;
