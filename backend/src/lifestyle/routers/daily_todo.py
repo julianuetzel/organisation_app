@@ -72,7 +72,7 @@ async def create(request: Request, daily_todo: DailyToDo = Body(...)):
     "/{id}",
     response_description="Update a daily_todo",
     status_code=status.HTTP_202_ACCEPTED,
-    response_model=DailyToDo,
+    response_model=DailyToDoUpdate,
 )
 async def update(
     request: Request, id: str, daily_todo_update: DailyToDoUpdate = Body(...)

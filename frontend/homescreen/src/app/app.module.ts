@@ -4,9 +4,10 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { MatToolbarModule } from '@angular/material/toolbar'
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatDialogModule} from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card'
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatButtonModule } from '@angular/material/button'
 import { MatDividerModule } from '@angular/material/divider';
@@ -19,7 +20,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 
-
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DailyTodoComponent } from './daily-todo/daily-todo.component';
@@ -31,6 +31,7 @@ import { HobbiesComponent } from './hobbies/hobbies.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { MoodComponent } from './mood/mood.component';
 import { WeeklyTodoComponent } from './weekly-todo/weekly-todo.component';
+import { DialogComponent } from './daily-todo/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -43,11 +44,13 @@ import { WeeklyTodoComponent } from './weekly-todo/weekly-todo.component';
     CalendarComponent,
     MoodComponent,
     WeeklyTodoComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,
     MatToolbarModule,
     MatCardModule,
+    MatDialogModule,
     MatGridListModule,
     MatButtonModule,
     MatDividerModule,

@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from datetime import date
 import uuid
-from typing import Optional
 from pydantic import BaseModel, Field
 
 
@@ -24,8 +23,8 @@ class DailyToDo(BaseModel):
 
 @dataclass()
 class DailyToDoUpdate:
-    task: Optional[str]
-    status: Optional[bool]
+    task: str
+    done: bool
 
     class Config:
         allow_population_by_field_name = True
