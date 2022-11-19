@@ -6,7 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './inMemoryDataService';
 
-import { MatToolbarModule } from '@angular/material/toolbar'
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatDialogModule} from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list'
@@ -21,7 +22,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 
-
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DailyTodoComponent } from './daily-todo/daily-todo.component';
@@ -33,6 +33,7 @@ import { HobbiesComponent } from './hobbies/hobbies.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { MoodComponent } from './mood/mood.component';
 import { WeeklyTodoComponent } from './weekly-todo/weekly-todo.component';
+import { DialogComponent } from './daily-todo/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { WeeklyTodoComponent } from './weekly-todo/weekly-todo.component';
     CalendarComponent,
     MoodComponent,
     WeeklyTodoComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +55,7 @@ import { WeeklyTodoComponent } from './weekly-todo/weekly-todo.component';
     ),
     MatToolbarModule,
     MatCardModule,
+    MatDialogModule,
     MatGridListModule,
     MatButtonModule,
     MatDividerModule,
