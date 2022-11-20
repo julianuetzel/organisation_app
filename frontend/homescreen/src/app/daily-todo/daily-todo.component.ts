@@ -29,14 +29,12 @@ export class DailyTodoComponent implements OnInit {
     this.getDailyTodosByDate(this.formatDate(this.date));
   }
 
-  formatDate(date: Date) {
-    return (
-      [
-        date.getFullYear(),
-        (date.getMonth() + 1).toString().padStart(2, '0'),
-        (date.getDate()).toString().padStart(2, '0'),
-      ].join('.')
-    );
+  formatDate(date: Date): string {
+    return ([
+      date.getFullYear().toString(),
+      (date.getMonth() + 1).toString(),
+      date.getDate().toString()
+    ].join("."))
   }
 
   getDailyTodosByDate(date: string): void {
