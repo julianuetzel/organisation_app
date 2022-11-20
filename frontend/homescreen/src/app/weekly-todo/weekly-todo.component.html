@@ -1,28 +1,46 @@
 <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 </head>
+    <div class="weekly-todo">
+        <div class="button-row">
+            <button mat-button (click)="week_before(week_number)">
+                <span class="material-symbols-outlined">
+                    arrow_back_ios
+                </span>
+            </button>
+            <span>{{week_number}}</span>
+            <button mat-button (click)="week_after(week_number)">
+                <span class="material-symbols-outlined">
+                    arrow_forward_ios
+                </span>
+            </button>
+        </div>
 
-<div class="flex-container">
-    <button mat-button>Letzte Woche</button>
-    <span>{{this_week()}}</span>
-    <button mat-button>Kommende Woche</button>
-
-    <mat-card>
-        <li *ngFor="let weekly_todo of weekly_todos">
-            <mat-checkbox [(ngModel)]="checked" (click)="change_status(checked)"><span>{{weekly_todo}}</span></mat-checkbox>
-        </li>
-        <mat-form-field appearance="fill">
-            <mat-label>neue Aufgabe</mat-label>
-            <input matInput [(ngModel)]="task">
-        </mat-form-field>
-            <mat-label>Done by</mat-label>
-            <mat-select  [(ngModel)]="selectedValue" name="day">
-                <mat-option *ngFor="let day of days" [value]="day.value">
-                    {{day.viewValue}}
-                </mat-option>
-            </mat-select>
-        <button *ngIf="task && selectedValue" mat-icon-button (click)="addWeeklyTodo(task, selectedValue); task=''; selectedValue=''">
-            <mat-icon>add_task</mat-icon>
-        </button>
-    </mat-card>
-</div> 
+        <mat-card class="card-list">
+            <li *ngFor="let weekly_todo of weekly_todos" class="list">
+                <mat-checkbox [(ngModel)]="weekly_todo.done" (click)="updateStatus(weekly_todo); progress()">
+                    <span>{{weekly_todo.task}}</span>
+                </mat-checkbox>
+                <div>
+                    <mat-icon mat-icon-button (click)="openDialog(weekly_todo)">edit</mat-icon>
+                    <mat-icon mat-icon-button (click)="deleteDailyTodo(weekly_todo)">clear</mat-icon>
+                </div>
+            </li>
+            <mat-form-field appearance="fill">
+                <mat-label>neue Aufgabe</mat-label>
+                <input matInput #task>
+            </mat-form-field>
+            <button *ngIf="task" mat-icon-button (click)="addWeeklyTodo(task.value); task.value=''">
+                <mat-icon>add</mat-icon>
+            </button>
+        </mat-card>       
+        <div class="progress-spinner">
+            <h1>Progress:</h1>
+            <mat-progress-spinner
+                class="example-margin"
+                color="primary"
+                [mode]="mode"
+                [value]="progress()">
+            </mat-progress-spinner>
+        </div>
+    </div> 

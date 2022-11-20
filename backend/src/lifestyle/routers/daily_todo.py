@@ -7,6 +7,8 @@ from fastapi.encoders import jsonable_encoder
 from lifestyle.models.daily_todo import DailyToDo, DailyToDoUpdate
 from lifestyle.utils import general_asdict_factory
 
+from src.lifestyle.daily_todos import change_date
+
 router = APIRouter(prefix="/daily-todos", tags=["daily-todos"])
 
 
@@ -46,6 +48,7 @@ async def get_by_date(request: Request, task_date: str):
         request.app.database["daily_todos"].find({"task_date": task_date})
     )
     if daily_todos is not None:
+        change_date(task_date)
         return daily_todos
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,

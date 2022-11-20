@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
-import { DailyTodoService } from '../dailytodo.service';
+import { DailyTodoService } from '../daily-todo.service';
 import { DailyToDo, DailyToDoUpdate } from './daily-todo';
 import { DialogComponent } from './dialog/dialog.component'
 import { MatDialog } from '@angular/material/dialog';
@@ -52,11 +52,6 @@ export class DailyTodoComponent implements OnInit {
         ...data
       });
     console.log(this.daily_todo)
-  }
-  
-  getDailyTodos(): DailyToDo[] {
-    this.dailytodoService.get_by_date(this.formatDate(this.date)).subscribe(daily_todos => this.daily_todos = daily_todos);
-    return this.daily_todos
   }
 
   addDailyTodo(task: string): void {

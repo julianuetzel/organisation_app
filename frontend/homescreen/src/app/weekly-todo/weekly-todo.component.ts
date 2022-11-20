@@ -1,8 +1,7 @@
-import { v4 as uuidv4 } from 'uuid';
 import { DateTime } from 'luxon';
 import { Component, OnInit } from '@angular/core';
-import { WeeklyToDoService } from '../weeklytodo.service';
-import { WeeklyToDo, WeeklyToDoStatus } from './weekly-todo';
+import { WeeklytodoService } from '../weeklytodo.service';
+import { WeeklyToDo } from './weekly-todo';
 
 interface Day {
   value: string;
