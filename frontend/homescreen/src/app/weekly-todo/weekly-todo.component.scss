@@ -1,25 +1,51 @@
-mat-card {
-    height: 500%;
-    width: 200%;
-    background-color: lightcoral;
-    color: black;
-    text-align: left;
+.card-list {
+  height: 500%;
+  width: 200%;
+  background-color: lightcoral;
+  color: black;
+  text-align: left;
 }
 
-.flex-container {
-    display: flex;
+mat-checkbox {
+  display: flex;
+  justify-content: space-around;
+}
 
-    flex-flow: row wrap;
-    
-    justify-content: space-around;
+.weekly-todo {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding-top: 5%;
+  margin: 5% 10% 20% 10%;
+  list-style: none;
+}
 
-    align-items: flex-start;
-    
-    padding-top: 5%;
-    margin: 5% 10% 20% 10%;
-    list-style: none;
-  }
+.button-row {
+display: inline;
+justify-content: space-around;
+align-items: center;
+margin-bottom: 2%;
+}
 
-  mat-checkbox {
-    margin: 0 10 px;
+mat-form-field {
+  margin: 5% 0% 0% 10%;
+}
+
+.list {
+  display: flex;
+  align-items:flex-start;
+  justify-content: space-between;
+  padding-top: 5%;
+  margin: 0% 10% 0% 10%;
+}
+
+mat-checkbox {
+  margin: 0 10 px;
+}
+
+.progress-spinner {
+align-self: flex-end;
+padding-top: 5%;
+margin: 5% 10% 20% 10%;
 }

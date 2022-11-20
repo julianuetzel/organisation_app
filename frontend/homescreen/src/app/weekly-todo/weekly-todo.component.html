@@ -21,16 +21,25 @@
                 <mat-checkbox [(ngModel)]="weekly_todo.done" (click)="updateStatus(weekly_todo); progress()">
                     <span>{{weekly_todo.task}}</span>
                 </mat-checkbox>
+                <span>{{weekly_todo.done_by}}</span>
                 <div>
                     <mat-icon mat-icon-button (click)="openDialog(weekly_todo)">edit</mat-icon>
-                    <mat-icon mat-icon-button (click)="deleteDailyTodo(weekly_todo)">clear</mat-icon>
+                    <mat-icon mat-icon-button (click)="deleteWeeklyTodo(weekly_todo)">clear</mat-icon>
                 </div>
             </li>
             <mat-form-field appearance="fill">
                 <mat-label>neue Aufgabe</mat-label>
                 <input matInput #task>
             </mat-form-field>
-            <button *ngIf="task" mat-icon-button (click)="addWeeklyTodo(task.value); task.value=''">
+            <mat-form-field appearance="fill">
+                <mat-label>Abgabedatum</mat-label>
+                <mat-select [(ngModel)]="selectedDay" name="days">
+                  <mat-option *ngFor="let day of days" [value]="day.value">
+                    {{day.viewValue}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button *ngIf="task && selectedDay" mat-icon-button (click)="addWeeklyTodo(task.value, selectedDay.value); task.value=''">
                 <mat-icon>add</mat-icon>
             </button>
         </mat-card>       

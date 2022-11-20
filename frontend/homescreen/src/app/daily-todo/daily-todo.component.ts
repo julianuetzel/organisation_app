@@ -4,6 +4,7 @@ import { DailyTodoService } from '../daily-todo.service';
 import { DailyToDo, DailyToDoUpdate } from './daily-todo';
 import { DialogComponent } from './dialog/dialog.component'
 import { MatDialog } from '@angular/material/dialog';
+import { v4 as uuidv4 } from 'uuid';
 
 
 
@@ -59,7 +60,7 @@ export class DailyTodoComponent implements OnInit {
     if (!task) { return; }
 
     let new_daily_todo : DailyToDo = {
-      _id: "",
+      _id: uuidv4(),
       task: task,
       done: false,
       task_date: this.formatDate(this.date),
