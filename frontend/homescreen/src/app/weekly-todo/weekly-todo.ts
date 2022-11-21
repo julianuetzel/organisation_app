@@ -1,5 +1,5 @@
 export interface WeeklyToDo{
-    id: string,
+    _id: string,
     task: string,
     done: boolean,
     task_week: number,
@@ -9,6 +9,5 @@ export interface WeeklyToDo{
 export interface WeeklyToDoUpdate {
     task: string,
     done: boolean,
-    task_week: number,
     done_by: string,
 }

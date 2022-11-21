@@ -8,7 +8,7 @@ import { DailyToDo, DailyToDoUpdate } from './daily-todo/daily-todo';
   providedIn: 'root'
 })
 export class DailyTodoService {
-  url = "http://127.0.0.1/daily-todos"
+  url = "http://127.0.0.1:5000/daily-todos"
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };

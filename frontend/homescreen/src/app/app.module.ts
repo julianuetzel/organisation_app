@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -31,7 +32,8 @@ import { HobbiesComponent } from './hobbies/hobbies.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { MoodComponent } from './mood/mood.component';
 import { WeeklyTodoComponent } from './weekly-todo/weekly-todo.component';
-import { DialogComponent } from './daily-todo/dialog/dialog.component';
+import { DialogComponent as DailyToDoDialog } from './daily-todo/dialog/dialog.component';
+import { DialogComponent as WeeklyToDoDialog } from './weekly-todo/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { DialogComponent } from './daily-todo/dialog/dialog.component';
     CalendarComponent,
     MoodComponent,
     WeeklyTodoComponent,
-    DialogComponent,
+    DailyToDoDialog,
+    WeeklyToDoDialog,
   ],
   imports: [
     BrowserModule,

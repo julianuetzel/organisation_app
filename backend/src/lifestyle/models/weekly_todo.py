@@ -1,9 +1,6 @@
 import uuid
 from dataclasses import dataclass
 from datetime import date
-from enum import Enum
-from typing import Optional
-
 from pydantic import BaseModel, Field
 
 
@@ -11,7 +8,7 @@ class WeeklyToDo(BaseModel):
     id: str = Field(default_factory=uuid.uuid4, alias="_id")
     task: str = Field(...)
     done: bool = Field(default=False)
-    task_week: str = Field(default=date.today().isocalendar()[1])
+    task_week: int = Field(default=date.today().isocalendar()[1])
     done_by: str = Field(default="Sunday")
 
     class Config:
@@ -30,7 +27,6 @@ class WeeklyToDo(BaseModel):
 class WeeklyToDoUpdate:
     task: str
     done: bool
-    task_week: str
     done_by: str
 
     class Config:
@@ -39,7 +35,6 @@ class WeeklyToDoUpdate:
             "example": {
                 "task": "nächstes Kapitel schreiben",
                 "done": "False",
-                "task_week": "39",
                 "done_by": "Mittwoch",
             }
         }

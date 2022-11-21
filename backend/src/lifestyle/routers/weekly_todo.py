@@ -38,7 +38,7 @@ async def get_by_id(request: Request, id: str):
     response_description="Get all weekly_todos for the week",
     response_model=List[WeeklyToDo],
 )
-async def get_by_week(request: Request, task_week: str):
+async def get_by_week(request: Request, task_week: int):
     weekly_todos = list(
         request.app.database["weekly_todos"].find({"task_week": task_week})
     )
