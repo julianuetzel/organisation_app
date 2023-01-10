@@ -1,3 +1,4 @@
+import datetime
 from dataclasses import asdict
 from typing import List
 from fastapi import APIRouter, Request, HTTPException, status, Body, Response
@@ -33,20 +34,20 @@ async def get_by_id(request: Request, id: str):
 
 
 @router.get(
-    "/type/{finance_type}",
-    response_description="Get finances by type",
+    "/month/{month}",
+    response_description="Get finances by month",
     response_model=List[Finance],
 )
-async def get_by_type(request: Request, finance_type: FinanceType):
+async def get_by_month(request: Request, month: int, year: int):
     if (
         finances := list(
-            request.app.database["finances"].find({"type": finance_type.value})
-        )
+            request.app.database["finances"].find({"date": {"$gt": datetime.date(year, month, day=1),
+                                                            "$lt": datetime.date(year, month, day=31)}}))
     ) is not None:
         return finances
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
-        detail=f"No finances with type {finance_type} found!",
+        detail=f"No finances for {month}/{year} found!",
     )
 
 
@@ -71,11 +72,11 @@ async def create(request: Request, finance: Finance = Body(...)):
     status_code=status.HTTP_202_ACCEPTED,
     response_model=Finance,
 )
-async def update(request: Request, id: str, finance_update: FinanceUpdate = Body(...)):
+async def update(request: Request, id: str, finance: Finance = Body(...)):
     if request.app.database["finances"].find_one({"_id": id}) is not None:
         request.app.database["finances"].update_one(
             {"_id": id},
-            {"$set": asdict(finance_update, dict_factory=general_asdict_factory)},
+            {"$set": asdict(finance, dict_factory=general_asdict_factory)},
         )
     if (finance := request.app.database["finances"].find_one({"_id": id})) is not None:
         return finance
