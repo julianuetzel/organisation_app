@@ -3,10 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list'
@@ -20,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -34,6 +34,7 @@ import { MoodComponent } from './mood/mood.component';
 import { WeeklyTodoComponent } from './weekly-todo/weekly-todo.component';
 import { DialogComponent as DailyToDoDialog } from './daily-todo/dialog/dialog.component';
 import { DialogComponent as WeeklyToDoDialog } from './weekly-todo/dialog/dialog.component';
+import { DialogComponent as FinancesDialog } from './finances/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -48,10 +49,12 @@ import { DialogComponent as WeeklyToDoDialog } from './weekly-todo/dialog/dialog
     WeeklyTodoComponent,
     DailyToDoDialog,
     WeeklyToDoDialog,
+    FinancesDialog,
   ],
   imports: [
     BrowserModule,
     MatToolbarModule,
+    MatTableModule,
     MatCardModule,
     MatDialogModule,
     MatGridListModule,

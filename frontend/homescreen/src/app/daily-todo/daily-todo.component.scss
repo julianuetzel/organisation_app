@@ -4,7 +4,7 @@
     background-color: burlywood;
     color: black;
     text-align: left;
-}
+  }
 
 .daily-todo {
     display: flex;
@@ -12,7 +12,7 @@
     justify-content: space-around;
     align-items: flex-start;
     padding-top: 5%;
-    margin: 5% 10% 20% 10%;
+    margin: 5% 30% 5% 30%;
     list-style: none;
   }
 
@@ -32,7 +32,7 @@ mat-form-field {
     align-items:flex-start;
     justify-content: space-between;
     padding-top: 5%;
-    margin: 0% 10% 0% 10%;
+    margin: 0% 5% 0% 5%;
   }
 
 mat-checkbox {

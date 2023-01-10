@@ -1,0 +1,9 @@
+<mat-form-field appearance="fill">
+    <mat-label>Item</mat-label>    
+    <input matInput [(ngModel)]="data.name">
+</mat-form-field>
+<mat-form-field appearance="fill">
+    <input matInput [(ngModel)]="data.amount">
+</mat-form-field>
+<button mat-button (click)="abbort()">Abbrechen</button>
+<button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
