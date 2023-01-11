@@ -84,7 +84,7 @@ export class WeeklyTodoComponent implements OnInit {
       data: {task: weekly_todo.task, done_by: weekly_todo.done_by},
     })
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result.task)
+      console.log(result.task, result.done_by)
       let updated_weekly_todo : WeeklyToDoUpdate = {
         task: result.task,
         done: weekly_todo.done,
@@ -107,14 +107,14 @@ export class WeeklyTodoComponent implements OnInit {
     return (i*100/this.weekly_todos.length)    
   }
 
-  week_before(week_number: number){
+  week_before(){
     this.date = this.date.minus(604800000);
     this.week_number = this.date.weekNumber;
     console.log(this.week_number)
     this.getWeeklyTodosByDate(this.week_number)
   }
 
-  week_after(week_after: number) {
+  week_after() {
     this.date = this.date.plus(604800000);
     this.week_number = this.date.weekNumber;
     console.log(this.week_number)

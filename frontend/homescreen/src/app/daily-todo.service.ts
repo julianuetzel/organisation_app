@@ -35,7 +35,7 @@ export class DailyTodoService {
   get_by_id(id: string): Observable<DailyToDo> {
     const url = `${this.url}/${id}`
     return this.http.get<DailyToDo>(url, this.httpOptions).pipe(
-      tap(element => console.log(`Got daily-todo with Id ${id}`)),
+      tap(id => console.log(`Got daily-todo with Id ${id}`)),
       catchError(this.handleError<DailyToDo>(`get_by_id ID=${id}`))
     )
   }

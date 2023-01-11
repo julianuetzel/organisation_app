@@ -3,13 +3,13 @@
 </head>
     <div class="weekly-todo">
         <div class="button-row">
-            <button mat-button (click)="week_before(week_number)">
+            <button mat-button (click)="week_before()">
                 <span class="material-symbols-outlined">
                     arrow_back_ios
                 </span>
             </button>
             <span>{{week_number}}</span>
-            <button mat-button (click)="week_after(week_number)">
+            <button mat-button (click)="week_after()">
                 <span class="material-symbols-outlined">
                     arrow_forward_ios
                 </span>
@@ -27,18 +27,20 @@
                     <mat-icon mat-icon-button (click)="deleteWeeklyTodo(weekly_todo)">clear</mat-icon>
                 </div>
             </li>
-            <mat-form-field appearance="fill">
-                <mat-label>neue Aufgabe</mat-label>
-                <input matInput #task>
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Abgabedatum</mat-label>
-                <mat-select [(ngModel)]="selectedDay" name="days">
-                  <mat-option *ngFor="let day of days" [value]="day.value">
-                    {{day.viewValue}}
-                  </mat-option>
-                </mat-select>
-            </mat-form-field>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>neue Aufgabe</mat-label>
+                    <input matInput #task>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Abgabedatum</mat-label>
+                    <mat-select [(ngModel)]="selectedDay" name="days">
+                    <mat-option *ngFor="let day of days" [value]="day.value">
+                        {{day.viewValue}}
+                    </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
             <button *ngIf="task && selectedDay" mat-icon-button (click)="addWeeklyTodo(task.value, selectedDay.value); task.value=''">
                 <mat-icon>add</mat-icon>
             </button>
