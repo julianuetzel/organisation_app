@@ -28,7 +28,7 @@ export class FinancesComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.getMonthlyBalance(this.date.getMonth())
+    this.getMonthlyBalance(this.date.getMonth(), this.date.getFullYear())
   }
   
   sortByType(finances: Finances[]){
@@ -72,8 +72,8 @@ export class FinancesComponent implements OnInit {
     ].join(" "))
   }
 
-  getMonthlyBalance(month: number): void{
-    	this.financeservive.get_by_month(month)
+  getMonthlyBalance(month: number, year: number): void{
+    	this.financeservive.get_by_month(month, year)
       .subscribe((data: Finances[]) => this.finances = [
         ...data]
       );

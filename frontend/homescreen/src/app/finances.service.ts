@@ -24,8 +24,8 @@ export class FinancesService {
     };
   }
 
-  get_by_month(month: number): Observable<Finances[]> {
-    const url = `${this.url}/month/${month}`;
+  get_by_month(month: number, year: number): Observable<Finances[]> {
+    const url = `${this.url}/month/${month}.${year}`;
     return this.http.get<Finances[]>(url, this.httpOption).pipe(
       tap(_ => console.log(`Got all Finances for ${month}`)),
       catchError(this.handleError<Finances[]>("get_by_month", []))
