@@ -1,0 +1,57 @@
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+</head>
+    <div class="weekly-todo">
+        <div class="button-row">
+            <button mat-button (click)="week_before()">
+                <span class="material-symbols-outlined">
+                    arrow_back_ios
+                </span>
+            </button>
+            <span>{{week_number}}</span>
+            <button mat-button (click)="week_after()">
+                <span class="material-symbols-outlined">
+                    arrow_forward_ios
+                </span>
+            </button>
+        </div>
+
+        <mat-card class="card-list">
+            <li *ngFor="let weekly_todo of weekly_todos" class="list">
+                <mat-checkbox [(ngModel)]="weekly_todo.done" (click)="updateStatus(weekly_todo); progress()">
+                    <span>{{weekly_todo.task}}</span>
+                </mat-checkbox>
+                <span>{{weekly_todo.done_by}}</span>
+                <div>
+                    <mat-icon mat-icon-button (click)="openDialog(weekly_todo)">edit</mat-icon>
+                    <mat-icon mat-icon-button (click)="deleteWeeklyTodo(weekly_todo)">clear</mat-icon>
+                </div>
+            </li>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>neue Aufgabe</mat-label>
+                    <input matInput #task>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Abgabedatum</mat-label>
+                    <mat-select [(ngModel)]="selectedDay" name="days">
+                    <mat-option *ngFor="let day of days" [value]="day.value">
+                        {{day.viewValue}}
+                    </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <button *ngIf="task && selectedDay" mat-icon-button (click)="addWeeklyTodo(task.value, selectedDay.value); task.value=''">
+                <mat-icon>add</mat-icon>
+            </button>
+        </mat-card>       
+        <div class="progress-spinner">
+            <h1>Progress:</h1>
+            <mat-progress-spinner
+                class="example-margin"
+                color="primary"
+                [mode]="mode"
+                [value]="progress()">
+            </mat-progress-spinner>
+        </div>
+    </div> 

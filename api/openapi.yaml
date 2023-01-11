@@ -1,0 +1,637 @@
+---
+openapi: 3.0.2
+info:
+  title: FastAPI
+  version: 0.1.0
+paths:
+  "/daily-todos/":
+    get:
+      tags:
+      - daily-todos
+      summary: Get All
+      operationId: get_all_daily_todos__get
+      responses:
+        '200':
+          description: Get all daily_todos
+          content:
+            application/json:
+              schema:
+                title: Response Get All Daily Todos  Get
+                type: array
+                items:
+                  "$ref": "#/components/schemas/DailyToDo"
+    post:
+      tags:
+      - daily-todos
+      summary: Create
+      operationId: create_daily_todos__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/DailyToDo"
+        required: true
+      responses:
+        '201':
+          description: Create a new daily_todo
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DailyToDo"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  "/daily-todos/{id}":
+    get:
+      tags:
+      - daily-todos
+      summary: Get By Id
+      operationId: get_by_id_daily_todos__id__get
+      parameters:
+      - required: true
+        schema:
+          title: Id
+          type: string
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Get a single daily_todo by id
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DailyToDo"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+    put:
+      tags:
+      - daily-todos
+      summary: Update
+      operationId: update_daily_todos__id__put
+      parameters:
+      - required: true
+        schema:
+          title: Id
+          type: string
+        name: id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/DailyToDoUpdate"
+        required: true
+      responses:
+        '202':
+          description: Update a daily_todo
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DailyToDo"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+    delete:
+      tags:
+      - daily-todos
+      summary: Delete
+      operationId: delete_daily_todos__id__delete
+      parameters:
+      - required: true
+        schema:
+          title: Id
+          type: string
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Delete a daily_todo
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  "/daily-todos/date/{task_date}":
+    get:
+      tags:
+      - daily-todos
+      summary: Get By Date
+      operationId: get_by_date_daily_todos_date__task_date__get
+      parameters:
+      - required: true
+        schema:
+          title: Task Date
+          type: string
+        name: task_date
+        in: path
+      responses:
+        '200':
+          description: Get all daily_todos for the day
+          content:
+            application/json:
+              schema:
+                title: Response Get By Date Daily Todos Date  Task Date  Get
+                type: array
+                items:
+                  "$ref": "#/components/schemas/DailyToDo"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  "/weekly-todos/":
+    get:
+      tags:
+      - weekly-todos
+      summary: Get All
+      operationId: get_all_weekly_todos__get
+      responses:
+        '200':
+          description: Get all weekly_todos
+          content:
+            application/json:
+              schema:
+                title: Response Get All Weekly Todos  Get
+                type: array
+                items:
+                  "$ref": "#/components/schemas/WeeklyToDo"
+    post:
+      tags:
+      - weekly-todos
+      summary: Create
+      operationId: create_weekly_todos__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/WeeklyToDo"
+        required: true
+      responses:
+        '201':
+          description: Create a new weekly_todo
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/WeeklyToDo"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  "/weekly-todos/{id}":
+    get:
+      tags:
+      - weekly-todos
+      summary: Get By Id
+      operationId: get_by_id_weekly_todos__id__get
+      parameters:
+      - required: true
+        schema:
+          title: Id
+          type: string
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Get a single weekly_todo by id
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/WeeklyToDo"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+    put:
+      tags:
+      - weekly-todos
+      summary: Update
+      operationId: update_weekly_todos__id__put
+      parameters:
+      - required: true
+        schema:
+          title: Id
+          type: string
+        name: id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/WeeklyToDoUpdate"
+        required: true
+      responses:
+        '202':
+          description: Update a weekly_todo
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/WeeklyToDo"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+    delete:
+      tags:
+      - weekly-todos
+      summary: Delete
+      operationId: delete_weekly_todos__id__delete
+      parameters:
+      - required: true
+        schema:
+          title: Id
+          type: string
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Delete a weekly_todo
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  "/weekly-todos/week/{task_week}":
+    get:
+      tags:
+      - weekly-todos
+      summary: Get By Week
+      operationId: get_by_week_weekly_todos_week__task_week__get
+      parameters:
+      - required: true
+        schema:
+          title: Task Week
+          type: string
+        name: task_week
+        in: path
+      responses:
+        '200':
+          description: Get all weekly_todos for the week
+          content:
+            application/json:
+              schema:
+                title: Response Get By Week Weekly Todos Week  Task Week  Get
+                type: array
+                items:
+                  "$ref": "#/components/schemas/WeeklyToDo"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  "/finances/":
+    get:
+      tags:
+      - finances
+      summary: Get All
+      operationId: get_all_finances__get
+      responses:
+        '200':
+          description: Get all finances
+          content:
+            application/json:
+              schema:
+                title: Response Get All Finances  Get
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Finance"
+    post:
+      tags:
+      - finances
+      summary: Create
+      operationId: create_finances__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Finance"
+        required: true
+      responses:
+        '201':
+          description: Create a new finance
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Finance"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  "/finances/{id}":
+    get:
+      tags:
+      - finances
+      summary: Get By Id
+      operationId: get_by_id_finances__id__get
+      parameters:
+      - required: true
+        schema:
+          title: Id
+          type: string
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Get single finance by id
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Finance"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+    put:
+      tags:
+      - finances
+      summary: Update
+      operationId: update_finances__id__put
+      parameters:
+      - required: true
+        schema:
+          title: Id
+          type: string
+        name: id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/FinanceUpdate"
+        required: true
+      responses:
+        '202':
+          description: Update a finance
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Finance"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+    delete:
+      tags:
+      - finances
+      summary: Delete
+      operationId: delete_finances__id__delete
+      parameters:
+      - required: true
+        schema:
+          title: Id
+          type: string
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Delete a finance
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+  "/finances/type/{finance_type}":
+    get:
+      tags:
+      - finances
+      summary: Get By Type
+      operationId: get_by_type_finances_type__finance_type__get
+      parameters:
+      - required: true
+        schema:
+          "$ref": "#/components/schemas/FinanceType"
+        name: finance_type
+        in: path
+      responses:
+        '200':
+          description: Get finances by type
+          content:
+            application/json:
+              schema:
+                title: Response Get By Type Finances Type  Finance Type  Get
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Finance"
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HTTPValidationError"
+components:
+  schemas:
+    DailyToDo:
+      title: DailyToDo
+      required:
+      - task
+      type: object
+      properties:
+        _id:
+          title: " Id"
+          type: string
+        task:
+          title: Task
+          type: string
+        status:
+          allOf:
+          - "$ref": "#/components/schemas/DailyToDoStatus"
+          default: open
+        task_date:
+          title: Task Date
+          type: string
+          default: 21-09-2022
+      example:
+        task: Abwaschen
+        status: open
+        task_date: '2022-09-14'
+    DailyToDoStatus:
+      title: DailyToDoStatus
+      enum:
+      - open
+      - closed
+      type: string
+      description: An enumeration.
+    DailyToDoUpdate:
+      title: DailyToDoUpdate
+      required:
+      - task
+      - status
+      type: object
+      properties:
+        task:
+          title: Task
+          type: string
+        status:
+          "$ref": "#/components/schemas/DailyToDoStatus"
+      description: 'DailyToDoUpdate(task: Optional[str], status: Optional[lifestyle.models.daily_todo.DailyToDoStatus])'
+    Finance:
+      title: Finance
+      required:
+      - name
+      - amount
+      - type
+      type: object
+      properties:
+        _id:
+          title: " Id"
+          type: string
+        name:
+          title: Name
+          type: string
+        amount:
+          title: Amount
+          type: number
+        type:
+          "$ref": "#/components/schemas/FinanceType"
+      example:
+        name: Fressnapf
+        amount: 10
+        type: INCOME
+    FinanceType:
+      title: FinanceType
+      enum:
+      - INCOME
+      - EXPENDITUR
+      type: string
+      description: An enumeration.
+    FinanceUpdate:
+      title: FinanceUpdate
+      required:
+      - name
+      - amount
+      - type
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+        amount:
+          title: Amount
+          type: number
+        type:
+          "$ref": "#/components/schemas/FinanceType"
+      description: 'FinanceUpdate(name: Optional[str], amount: Optional[float], type:
+        Optional[lifestyle.models.finances.FinanceType])'
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            "$ref": "#/components/schemas/ValidationError"
+    ValidationError:
+      title: ValidationError
+      required:
+      - loc
+      - msg
+      - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+    WeeklyToDo:
+      title: WeeklyToDo
+      required:
+      - task
+      type: object
+      properties:
+        _id:
+          title: " Id"
+          type: string
+        task:
+          title: Task
+          type: string
+        status:
+          allOf:
+          - "$ref": "#/components/schemas/WeeklyToDoStatus"
+          default: open
+        task_week:
+          title: Task Week
+          type: string
+          default: 38
+        done_by:
+          title: Done By
+          type: string
+          default: Sunday
+      example:
+        task: nächstes Kapitel schreiben
+        status: open
+        task_week: '38'
+        done_by: Sonntag
+    WeeklyToDoStatus:
+      title: WeeklyToDoStatus
+      enum:
+      - open
+      - closed
+      type: string
+      description: An enumeration.
+    WeeklyToDoUpdate:
+      title: WeeklyToDoUpdate
+      required:
+      - task
+      - status
+      - task_week
+      - done_by
+      type: object
+      properties:
+        task:
+          title: Task
+          type: string
+        status:
+          "$ref": "#/components/schemas/WeeklyToDoStatus"
+        task_week:
+          title: Task Week
+          type: string
+        done_by:
+          title: Done By
+          type: string
+      description: 'WeeklyToDoUpdate(task: Optional[str], status: Optional[lifestyle.models.weekly_todo.WeeklyToDoStatus],
+        task_week: Optional[str], done_by: Optional[str])'

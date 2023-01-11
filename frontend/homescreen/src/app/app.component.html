@@ -1,0 +1,189 @@
+<head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+</head>
+
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="drawer.toggle()">
+   <mat-icon>menu</mat-icon>
+  </button>
+  <span>{{title}}</span>
+</mat-toolbar>
+
+ <mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav">
+    <mat-list role="list">
+      <mat-list-item role="listitem" fxLayoutAlign=" left">
+      <div>
+          <button mat-button routerLink="/daily-todos" (click)="drawer.close()" routerLinkActive="active" ariaCurrentWhenActive="page">
+            <span class="material-symbols-outlined">
+              task
+          </span>
+          Daily TODO
+          </button>
+      </div>
+      </mat-list-item>
+      <mat-list-item role="listitem" fxLayoutAlign=" left">
+      <div>
+          <button mat-button routerLink="/shopping-list" (click)="drawer.close()" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <span class="material-symbols-outlined">
+              shopping_cart
+          </span>
+          Einkaufsliste
+          </button>
+      </div>
+      </mat-list-item>
+      <mat-list-item role="listitem" fxLayoutAlign=" left">
+          <div>
+          <button mat-button routerLink="/food-diary" (click)="drawer.close()" routerLinkActive="active" ariaCurrentWhenActive="page">
+              <span class="material-symbols-outlined">
+              ramen_dining
+              </span>
+              Essensplan
+          </button>
+          </div>   
+      </mat-list-item>
+      <mat-list-item role="listitem" fxLayoutAlign=" left"> 
+          <div>
+          <button mat-button routerLink="/finances" (click)="drawer.close()" routerLinkActive="active" ariaCurrentWhenActive="page">
+              <span class="material-symbols-outlined">
+              euro
+              </span>
+              Finanzen
+          </button>
+          </div>
+      </mat-list-item>
+      <mat-list-item role="listitem" fxLayoutAlign=" left">
+          <div>
+          <button mat-button routerLink="/hobbies" (click)="drawer.close()" routerLinkActive="active" ariaCurrentWhenActive="page">
+              <span class="material-symbols-outlined">
+              palette
+              </span>
+              Hobbies
+          </button>
+          </div>
+      </mat-list-item>
+      <mat-list-item role="listitem" fxLayoutAlign=" left">
+          <div >
+          <button mat-button routerLink="/calendar" (click)="drawer.close()" routerLinkActive="active" ariaCurrentWhenActive="page">
+              <span class="material-symbols-outlined">
+              date_range
+              </span>
+              Kalender
+          </button>
+          </div>
+      </mat-list-item>
+      <mat-list-item role="listitem" fxLayoutAlign="left">
+          <div >
+          <button mat-button routerLink="/mood" (click)="drawer.close()" routerLinkActive="active" ariaCurrentWhenActive="page">
+              <span class="material-symbols-outlined">
+              sentiment_satisfied
+              </span>
+              Stimmung
+          </button>
+          </div>
+      </mat-list-item>
+      <mat-list-item role="listitem" fxLayoutAlign=" left">
+          <div >
+          <button mat-button routerLink="/weekly-todos" (click)="drawer.close()" routerLinkActive="active" ariaCurrentWhenActive="page">
+              <span class="material-symbols-outlined">
+              assignment
+              </span>
+              Weekly TODO
+          </button>
+          </div> 
+      </mat-list-item>
+  </mat-list>
+  </mat-drawer>
+
+  <div class="example-sidenav-content" (click)="drawer.close()">
+    <router-outlet></router-outlet>
+        <!-- <mat-card>
+          <mat-card-header>
+            <span class="material-symbols-outlined">task</span>
+            <mat-card-title>Daily TODO</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <button mat-button>
+              <iframe src="url" title="dailyTODO"></iframe>
+            </button>
+          </mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-header>
+            <span class="material-symbols-outlined">shopping_cart</span>
+            <mat-card-title>Einkaufsliste</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <button mat-button>
+              <iframe src="url" title="dailyTODo"></iframe>
+            </button>
+          </mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-header>
+            <span class="material-symbols-outlined">ramen_dining</span>
+            <mat-card-title>Essensplan</mat-card-title>
+          </mat-card-header>
+           <mat-card-content>
+             <button mat-button>
+              <iframe src="url" title="dailyTODo"></iframe>
+            </button> 
+          </mat-card-content> 
+        </mat-card>
+        <mat-card>
+          <mat-card-header>
+            <span class="material-symbols-outlined">euro</span>
+            <mat-card-title>Finanzen</mat-card-title>
+          </mat-card-header>
+           <mat-card-content>
+             <button mat-button>
+              <iframe src="url" title="dailyTODo"></iframe>
+            </button> 
+          </mat-card-content> 
+        </mat-card>
+        <mat-card>
+          <mat-card-header>
+            <span class="material-symbols-outlined">palette</span>
+            <mat-card-title>Hobbies</mat-card-title>
+          </mat-card-header>
+           <mat-card-content>
+             <button mat-button>
+              <iframe src="url" title="dailyTODo"></iframe>
+            </button>
+          </mat-card-content> 
+        </mat-card>
+        <mat-card>
+          <mat-card-header>
+            <span class="material-symbols-outlined">date_range</span>
+            <mat-card-title>Kalender</mat-card-title>
+          </mat-card-header>
+           <mat-card-content>
+            <button mat-button>
+              <iframe src="url" title="dailyTODo"></iframe>
+            </button> 
+          </mat-card-content 
+        </mat-card>
+        <mat-card>
+          <mat-card-header>
+            <span class="material-symbols-outlined">sentiment_satisfied</span>
+            <mat-card-title>Stimmung</mat-card-title>
+          </mat-card-header>
+           <mat-card-content>
+             <button mat-button>
+              <iframe src="url" title="dailyTODo"></iframe>
+            </button> 
+          </mat-card-content> 
+        </mat-card>
+        <mat-card>
+          <mat-card-header>
+            <span class="material-symbols-outlined">assignment</span>
+            <mat-card-title>Weekly TODO</mat-card-title>
+          </mat-card-header>
+           <mat-card-content>
+             <button mat-button>
+              <iframe src="url" title="dailyTODo"></iframe>
+            </button> 
+          </mat-card-content> 
+        </mat-card> -->
+  </div> 
+</mat-drawer-container>
