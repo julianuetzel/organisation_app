@@ -44,7 +44,8 @@ export class WeeklyTodoComponent implements OnInit {
   }
   
   getWeeklyTodosByDate(week_number: number): void {
-    this.weeklytodoService.get_by_week(week_number).subscribe(weekly_todos => this.weekly_todos = weekly_todos);
+    this.weeklytodoService.get_by_week(week_number)
+    .subscribe(weekly_todos => this.weekly_todos = weekly_todos);
   }
 
   addWeeklyTodo(task: string, done_by: string): void {

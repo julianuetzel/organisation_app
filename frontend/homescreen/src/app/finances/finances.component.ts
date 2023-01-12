@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Finances, FinanceType } from './finances';
+import { Finances } from './finances';
 import { FinancesService } from '../finances.service';
 
 import { DialogComponent } from './dialog/dialog.component'
@@ -28,16 +28,21 @@ export class FinancesComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.getMonthlyBalance(this.date.getMonth(), this.date.getFullYear())
+    console.log("month=",(this.date.getMonth()+1), " year=", this.date.getFullYear())
+    var month = "0" + (this.date.getMonth()+1).toString()
+    this.getMonthlyBalance(month, this.date.getFullYear())
   }
   
   sortByType(finances: Finances[]){
     for (var finance of finances) {
-      if (finance.type == FinanceType.expenditure){
+      console.log("I'm in loop")
+      if (finance.type == 0){
         this.financesExpenditure.push()
+        console.log("I'm in expenditure")
       }
-      else if (finance.type == FinanceType.income) {
+      else if (finance.type == 1) {
         this.financesIncome.push()
+        console.log("I'm in income")
       }
       else {
         console.log("Something went wrong with Sorting!")
@@ -72,13 +77,25 @@ export class FinancesComponent implements OnInit {
     ].join(" "))
   }
 
-  getMonthlyBalance(month: number, year: number): void{
+  formatFullDate(date: Date): string {
+    if ((date.getMonth() + 1) < 10) {
+      var month = "0" + (date.getMonth()+1).toString()
+    }
+    else {
+      month = (date.getMonth() + 1).toString()
+    }
+    return ([
+      date.getFullYear().toString(),
+      (date.getMonth() + 1).toString(),
+      date.getDate().toString()
+    ].join("."))
+  }
+
+  getMonthlyBalance(month: string, year: number): void{
     	this.financeservive.get_by_month(month, year)
-      .subscribe((data: Finances[]) => this.finances = [
-        ...data]
-      );
+      .subscribe(finances => (this.finances = finances));
+      console.log(this.finances, this.finances.values)
       this.sortByType(this.finances)
-      console.log(this.finances.values, this.finances)
   }
 
   getFinancesById(id: string): void {
@@ -89,19 +106,19 @@ export class FinancesComponent implements OnInit {
     console.log(this.finance)
   }
 
-  addFinance(type: FinanceType, name: string, amount: number): void{
+  addFinance(type: number, name: string, amount: number): void{
     let new_finance : Finances = {
-      id: uuidv4(),
+      _id: uuidv4(),
       type: type,
       name: name.trim(),
       amount: amount,
-      date: Date.now().toString()
+      date: this.formatFullDate(this.date),
     };
-    if (type == FinanceType.expenditure) {
+    if (type == 0) {
       this.financeservive.create(new_finance)
       .subscribe(finance => this.financesExpenditure.push(finance))
     }
-    else if (type == FinanceType.income) {
+    else if (type == 1) {
       this.financeservive.create(new_finance)
       .subscribe(finance => this.financesIncome.push(finance))
     }
@@ -115,7 +132,7 @@ export class FinancesComponent implements OnInit {
   }
 
   deleteFinance(finance: Finances): void{
-    this.financeservive.delete(finance.id).subscribe()
+    this.financeservive.delete(finance._id).subscribe()
   }
 
   openDialog(finance: Finances){
@@ -131,7 +148,7 @@ export class FinancesComponent implements OnInit {
     });
   }
 
-  openCreateDialog(type: FinanceType){
+  openCreateDialog(type: number){
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '250px',
       data: {

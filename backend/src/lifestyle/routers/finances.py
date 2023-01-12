@@ -4,7 +4,7 @@ from typing import List
 from fastapi import APIRouter, Request, HTTPException, status, Body, Response
 from fastapi.encoders import jsonable_encoder
 
-from lifestyle.models.finances import Finance, FinanceUpdate, FinanceType
+from lifestyle.models.finances import Finance
 from lifestyle.utils import general_asdict_factory
 
 router = APIRouter(prefix="/finances", tags=["finances"])
@@ -34,16 +34,21 @@ async def get_by_id(request: Request, id: str):
 
 
 @router.get(
-    "/month/{month}",
+    "/month/{month}-{year}",
     response_description="Get finances by month",
     response_model=List[Finance],
 )
 async def get_by_month(request: Request, month: int, year: int):
+    if month >= 1 & month < 10:
+        month = "0" + month.__str__()
+    date = month+"/"+year.__str__()
+    print(date)
     if (
         finances := list(
-            request.app.database["finances"].find({"date": {"$gt": datetime.date(year, month, day=1),
-                                                            "$lt": datetime.date(year, month, day=31)}}))
+            request.app.database["finances"].find({"date": date}))
+
     ) is not None:
+        print(finances)
         return finances
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,

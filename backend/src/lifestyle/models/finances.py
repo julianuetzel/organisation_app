@@ -1,21 +1,15 @@
-import datetime
 import uuid
 from enum import Enum
+from datetime import datetime
 
 from pydantic import BaseModel, Field
 
-
-class FinanceType(Enum):
-    income = 0
-    expenditure = 1
-
-
 class Finance(BaseModel):
-    id: str = Field(alias="_id")
+    id: str = Field(default_factory=uuid.uuid4, alias="_id")
     name: str = Field(...)
     amount: float = Field(...)
-    type: FinanceType = Field(...)
-    date: str = Field(default_factory=datetime.datetime.today())
+    type: int = Field(...)
+    date = Field(default=datetime.today().strftime("%m/%Y"))
 
     class Config:
         allow_population_by_field_name = True

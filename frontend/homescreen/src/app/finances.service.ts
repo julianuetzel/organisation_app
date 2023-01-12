@@ -1,16 +1,16 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of, tap } from 'rxjs';
-import { DailyToDo } from './daily-todo/daily-todo';
+import { catchError, observable, Observable, of, tap } from 'rxjs';
 import { Finances } from './finances/finances';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FinancesService {
-  url = "http://127.0.0.1: 5000/finances"
+  url = "http://127.0.0.1:5000/finances"
   httpOption = {
-    headers: new HttpHeaders({'Content-Type': 'application/json'})
+    headers: new HttpHeaders({'Content-Type': 'application/json',
+                              'observe': 'body'})
   };
   constructor(
     private http: HttpClient
@@ -24,11 +24,12 @@ export class FinancesService {
     };
   }
 
-  get_by_month(month: number, year: number): Observable<Finances[]> {
-    const url = `${this.url}/month/${month}.${year}`;
+  get_by_month(month: string, year: number): Observable<Finances[]> {
+    const url = `${this.url}/month/${month}-${year}`;
+    console.log(url, this.http.get<Finances[]>(url, this.httpOption))
     return this.http.get<Finances[]>(url, this.httpOption).pipe(
       tap(_ => console.log(`Got all Finances for ${month}`)),
-      catchError(this.handleError<Finances[]>("get_by_month", []))
+      catchError(this.handleError<Finances[]>("get_by_month", [])),
     )
   }
 
@@ -43,15 +44,15 @@ export class FinancesService {
   create(finance: Finances): Observable<Finances> {
     return this.http.post<Finances>(this.url, finance, this.httpOption).pipe(
       tap(finance => console.log(`Created finance ${finance}`)),
-      catchError(this.handleError<Finances>(`create ID=${finance.id}`))
+      catchError(this.handleError<Finances>(`create ID=${finance._id}`))
     )
   }
 
   update(updated_finance: Finances): Observable<any>{
-    const url = `${this.url}/${updated_finance.id}`;
+    const url = `${this.url}/${updated_finance._id}`;
     return this.http.put(url, updated_finance, this.httpOption).pipe(
-      tap(_ => console.log(`Updated Finance with ID=${updated_finance.id}`)),
-      catchError(this.handleError(`updated ID=${updated_finance.id}`))
+      tap(_ => console.log(`Updated Finance with ID=${updated_finance._id}`)),
+      catchError(this.handleError(`updated ID=${updated_finance._id}`))
     )
   }
 

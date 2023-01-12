@@ -16,7 +16,7 @@ class DailyToDo(BaseModel):
             "example": {
                 "task": "Abwaschen",
                 "done": "False",
-                "task_date": "2022.09.14",
+                "task_date": "14.09.2022",
             }
         }
 
