@@ -5,3 +5,8 @@ export interface Finances {
     type: number,
     date: string,
 }
+
+export interface updateFinance {
+    name: string,
+    amount: number,
+}

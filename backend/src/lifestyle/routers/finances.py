@@ -1,10 +1,9 @@
-import datetime
 from dataclasses import asdict
 from typing import List
 from fastapi import APIRouter, Request, HTTPException, status, Body, Response
 from fastapi.encoders import jsonable_encoder
 
-from lifestyle.models.finances import Finance
+from lifestyle.models.finances import Finance, UpdateFinance
 from lifestyle.utils import general_asdict_factory
 
 router = APIRouter(prefix="/finances", tags=["finances"])
@@ -75,13 +74,13 @@ async def create(request: Request, finance: Finance = Body(...)):
     "/{id}",
     response_description="Update a finance",
     status_code=status.HTTP_202_ACCEPTED,
-    response_model=Finance,
+    response_model=UpdateFinance,
 )
-async def update(request: Request, id: str, finance: Finance = Body(...)):
+async def update(request: Request, id: str, update_finance: UpdateFinance = Body(...)):
     if request.app.database["finances"].find_one({"_id": id}) is not None:
         request.app.database["finances"].update_one(
             {"_id": id},
-            {"$set": asdict(finance, dict_factory=general_asdict_factory)},
+            {"$set": asdict(update_finance, dict_factory=general_asdict_factory)},
         )
     if (finance := request.app.database["finances"].find_one({"_id": id})) is not None:
         return finance

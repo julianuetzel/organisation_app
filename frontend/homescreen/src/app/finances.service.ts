@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, observable, Observable, of, tap } from 'rxjs';
-import { Finances } from './finances/finances';
+import { Finances, updateFinance } from './finances/finances';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +9,7 @@ import { Finances } from './finances/finances';
 export class FinancesService {
   url = "http://127.0.0.1:5000/finances"
   httpOption = {
-    headers: new HttpHeaders({'Content-Type': 'application/json',
-                              'observe': 'body'})
+    headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
   constructor(
     private http: HttpClient
@@ -26,8 +25,10 @@ export class FinancesService {
 
   get_by_month(month: string, year: number): Observable<Finances[]> {
     const url = `${this.url}/month/${month}-${year}`;
-    console.log(url, this.http.get<Finances[]>(url, this.httpOption))
-    return this.http.get<Finances[]>(url, this.httpOption).pipe(
+    return this.http.get<Finances[]>(url, {
+        ...this.httpOption,
+        observe: 'body',
+      }).pipe(
       tap(_ => console.log(`Got all Finances for ${month}`)),
       catchError(this.handleError<Finances[]>("get_by_month", [])),
     )
@@ -48,11 +49,11 @@ export class FinancesService {
     )
   }
 
-  update(updated_finance: Finances): Observable<any>{
-    const url = `${this.url}/${updated_finance._id}`;
+  update(updated_finance: updateFinance, finance: Finances): Observable<any>{
+    const url = `${this.url}/${finance._id}`;
     return this.http.put(url, updated_finance, this.httpOption).pipe(
-      tap(_ => console.log(`Updated Finance with ID=${updated_finance._id}`)),
-      catchError(this.handleError(`updated ID=${updated_finance._id}`))
+      tap(_ => console.log(`Updated Finance with ID=${finance._id}`)),
+      catchError(this.handleError(`updated ID=${finance._id}`))
     )
   }
 
