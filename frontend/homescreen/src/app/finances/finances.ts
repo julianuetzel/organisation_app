@@ -1,11 +1,12 @@
-export enum FinanceType{
-    income,
-    expenditure,
-}
 export interface Finances {
-    id: string,
-    type: FinanceType,
-    date: string,
-    amount: number,
+    _id: string,
     name: string,
+    amount: number,
+    type: number,
+    date: string,
+}
+
+export interface updateFinance {
+    name: string,
+    amount: number,
 }

@@ -1,39 +1,29 @@
-import uuid
 from dataclasses import dataclass
-from enum import Enum
-from typing import Optional
+import uuid
+from datetime import datetime
 
 from pydantic import BaseModel, Field
-
-
-class FinanceType(str, Enum):
-    income = "INCOME"
-    expenditure = "EXPENDITUR"
 
 
 class Finance(BaseModel):
     id: str = Field(default_factory=uuid.uuid4, alias="_id")
     name: str = Field(...)
     amount: float = Field(...)
-    type: FinanceType = Field(...)
-    repetitive: bool = Field(default=False)
+    type: int = Field(...)
+    date = Field(default=datetime.today().strftime("%m/%Y"))
 
     class Config:
         allow_population_by_field_name = True
         schema_extra = {
-            "example": {"name": "Fressnapf", "amount": 10.00, "type": "INCOME"}
+            "example": {"name": "Fressnapf", "amount": 10.00, "type": 0}
         }
 
 
-@dataclass
-class FinanceUpdate:
-    name: Optional[str]
-    amount: Optional[float]
-    type: Optional[FinanceType]
-    repetitive: bool = Field(default=False)
+@dataclass()
+class UpdateFinance:
+    name: str
+    amount: float
 
     class Config:
         allow_population_by_field_name = True
-        schema_extra = {
-            "example": {"name": "Amazon", "amount": "10.50", "type": "EXPENDITUR", "repetitive": "True"}
-        }
+        schema_extra = {"example": {"name": "Netto", "amount": "20.3"}}

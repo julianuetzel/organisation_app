@@ -15,37 +15,35 @@
         </button>
     </div>
 <div class="finances-main">
-    <table mat-table [dataSource]="financesExpenditure" class="mat-elevation-z8">
+    <table mat-table [dataSource]="expenditure" class="mat-elevation-z8">
         <!--Description Header-->
         <ng-container matColumnDef="table-description">
             <th mat-header-cell *matHeaderCellDef colspan="2"> Ausgaben </th>
         </ng-container>
 
-        <!--Delete Column-->
-        <ng-container matColumnDef="delete">
-            <td mat-cell *matCellDef="let finance">
-                <mat-icon (click)="deleteFinance(finance)">clear</mat-icon>
-            </td>
-        </ng-container>
-
         <!-- Item Column -->
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let finance" (click)="openDialog(finance)"> {{finance.name}} </td>
+            <td mat-cell *matCellDef="let financeOut"> 
+                <button mat-icon-button (click)="deleteFinance(financeOut)">
+                    <mat-icon>clear</mat-icon>
+                </button>
+                {{financeOut.name}} 
+            </td>
             <td mat-footer-cell *matFooterCellDef> Total </td>
         </ng-container>
     
         <!-- Cost Column -->
         <ng-container matColumnDef="amount">
             <th mat-header-cell *matHeaderCellDef> Amount </th>
-            <td mat-cell *matCellDef="let finance" (click)="openDialog(finance)"> {{finance.amount | currency: 'EUR'}} </td>
+            <td mat-cell *matCellDef="let financeOut" (click)="openDialog(financeOut)"> {{financeOut.amount | currency: 'EUR'}} </td>
             <td mat-footer-cell *matFooterCellDef> {{ getExpenditure() | currency: 'EUR'}} </td>
         </ng-container>
 
         <!--Button Column-->
         <ng-container matColumnDef="button">
             <td mat-footer-cell *matFooterCellDef colspan="2">
-              <button mat-button (click)="openCreateDialog(1)">Hinzufügen</button>
+              <button mat-button (click)="openCreateDialog(0)">Hinzufügen</button>
             </td>
         </ng-container>
     
@@ -57,38 +55,36 @@
 
     </table>
     <div style="width: 2%;"></div>
-    <table mat-table [dataSource]="financesIncome" class="mat-elevation-z8">
+    <table mat-table [dataSource]="income" class="mat-elevation-z8">
 
         <!--Description Header-->
         <ng-container matColumnDef="table-description">
             <th mat-header-cell *matHeaderCellDef colspan="2"> Einnahmen </th>
         </ng-container>
-
-        <!--Delete Column-->
-        <ng-container matColumnDef="delete">
-            <td mat-cell *matCellDef="let finance">
-                <mat-icon (click)="deleteFinance(finance)">clear</mat-icon>
-            </td>
-        </ng-container>
         
         <!-- Item Column -->
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let finance" (click)="openDialog(finance)"> {{finance.name}} </td>
+                <td mat-cell *matCellDef="let financeIn"> 
+                    <button mat-icon-button (click)="deleteFinance(financeIn)">
+                        <mat-icon>clear</mat-icon>
+                    </button>
+                    {{financeIn.name}} 
+                </td>
             <td mat-footer-cell *matFooterCellDef> Total </td>
         </ng-container>
     
         <!-- Cost Column -->
         <ng-container matColumnDef="amount">
             <th mat-header-cell *matHeaderCellDef> Amount </th>
-            <td mat-cell *matCellDef="let finance" (click)="openDialog(finance)"> {{finance.amount | currency: 'EUR'}} </td>
-            <td mat-footer-cell *matFooterCellDef> {{getIncome() | currency: 'EUR'}} </td>
+            <td mat-cell *matCellDef="let financeIn" (click)="openDialog(financeIn)"> {{financeIn.amount | currency: 'EUR'}} </td>
+            <td mat-footer-cell *matFooterCellDef> {{getIncome() | currency: 'EUR'}} </td> 
         </ng-container>
         
         <!--Button Column-->
         <ng-container matColumnDef="button">
             <td mat-footer-cell *matFooterCellDef colspan="2">
-              <button mat-button (click)="openCreateDialog(0)">Hinzufügen</button>
+              <button mat-button (click)="openCreateDialog(1)">Hinzufügen</button>
             </td>
         </ng-container>
     

@@ -26,6 +26,7 @@ export class DailyTodoService {
 
   get_by_date(date: string): Observable<DailyToDo[]> {
     const url = `${this.url}/date/${date}`
+    console.log(url)
     return this.http.get<DailyToDo[]>(url, this.httpOptions).pipe(
       tap(_ => console.log(`Got all ToDos for ${date}`)),
       catchError(this.handleError<DailyToDo[]>("get_by_date", []))

@@ -22,7 +22,7 @@ export class DailyTodoComponent implements OnInit {
 
   constructor(
     private dailytodoService: DailyTodoService, 
-    public dialog: MatDialog
+    public dialog: MatDialog,
     ) { }
   
   ngOnInit(): void {
@@ -30,19 +30,22 @@ export class DailyTodoComponent implements OnInit {
   }
 
   formatDate(date: Date): string {
+    if ((date.getMonth() + 1) < 10) {
+      var month = "0" + (date.getMonth()+1).toString()
+    }
+    else {
+      month = (date.getMonth() + 1).toString()
+    }
     return ([
       date.getFullYear().toString(),
-      (date.getMonth() + 1).toString(),
+      month,
       date.getDate().toString()
     ].join("."))
   }
 
   getDailyTodosByDate(date: string): void {
     this.dailytodoService.get_by_date(date)
-    .subscribe((data: DailyToDo[]) => this.daily_todos = [
-      ...data]
-    );
-    console.log(this.daily_todos.values, this.daily_todos)
+    .subscribe(daily_todos => this.daily_todos = daily_todos);
   }
 
   getDailyToDoById(id: string): void {
