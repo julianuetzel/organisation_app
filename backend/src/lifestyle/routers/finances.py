@@ -33,15 +33,11 @@ async def get_by_id(request: Request, id: str):
 
 
 @router.get(
-    "/month/{month}-{year}",
+    "/month/{date}",
     response_description="Get finances by month",
     response_model=List[Finance],
 )
-async def get_by_month(request: Request, month: int, year: int):
-    if month >= 1 & month < 10:
-        month = "0" + month.__str__()
-    date = month+"/"+year.__str__()
-    print(date)
+async def get_by_month(request: Request, date: str):
     if (
         finances := list(
             request.app.database["finances"].find({"date": date}))

@@ -15,7 +15,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class FinancesComponent implements OnInit {
   date = new Date();
-  print_date = this.formatePrintDate(this.date);
+  print_date = this.getPrintDate(this.date);
   displayedColumns: string[] = ['name', 'amount'];
 
   private finance!: Finances;
@@ -25,6 +25,7 @@ export class FinancesComponent implements OnInit {
 
   income!: MatTableDataSource<Finances>
   expenditure!: MatTableDataSource<Finances>
+  month = this.date.getMonth()+1;
   
   constructor(
     private financeservive: FinancesService,
@@ -32,21 +33,28 @@ export class FinancesComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    console.log("month=",(this.date.getMonth()+1), " year=", this.date.getFullYear())
-    var month = "0" + (this.date.getMonth()+1).toString()
-    this.getMonthlyBalance(month, this.date.getFullYear())
+    console.log(this.date)
+    this.getMonthlyBalance(this.date)
   }
   
+  getMonth(): string {
+    console.log("this.month = ", this.month)
+    if (this.month < 10) {
+      return ("0" + this.month.toString())
+    }
+    else {
+      return this.month.toString();
+    }
+  }
+
   sortByType(finances: Finances[]){
     for (var finance of finances) {
       if (finance.type == 0){
         this.financesExpenditure.push(finance)
-        this.expenditure = new MatTableDataSource(this.financesExpenditure)
         console.log(finance)
       }
       else if (finance.type == 1) {
         this.financesIncome.push(finance)
-        this.income = new MatTableDataSource(this.financesIncome)
         console.log(finance)
       }
       else {
@@ -55,9 +63,11 @@ export class FinancesComponent implements OnInit {
     }
   }
 
-  getMonthName(month_number: number): string{
-    switch (month_number) {
-      case 0: var month = "Januar"; break;
+  // Dateformat: January 2023 
+  getPrintDate(date: Date): string {
+    var month;
+    switch(date.getMonth()){
+      case 0: month = "Januar"; break;
       case 1: month = "Februar"; break;
       case 2: month = "März"; break;
       case 3: month = "April"; break;
@@ -71,36 +81,41 @@ export class FinancesComponent implements OnInit {
       case 11: month = "Dezember"; break;
       default: console.log("Something with the date went wrong!")
     }
-    return month!;
-  }
-
-  formatePrintDate(date: Date): string {
-    var month = this.getMonthName(date.getMonth());
     return([
       month,
       date.getFullYear().toString(),
     ].join(" "))
   }
 
-  formatDatabaseDate(date: Date): string {
+  // Dateformat: 01/2023
+  getDatabaseDate(date: Date): string {
     var month;
+    // 01 - 09
     if ((date.getMonth() + 1) < 10) {
       month = "0" + (date.getMonth()+1).toString()
     }
+
+    // 10, 11, 12
     else {
       month = (date.getMonth() + 1).toString()
     }
+
     return ([
       month.toString(),
       date.getFullYear().toString()
-    ].join("/"))
+    ].join("-"))
   }
 
-  getMonthlyBalance(month: string, year: number): void{
-    	this.financeservive.get_by_month(month, year)
+  getMonthlyBalance(date: Date): void{
+    this.finances = []
+    this.financesExpenditure = []
+    this.financesIncome = []
+    	this.financeservive.get_by_month(this.getDatabaseDate(date))
       .subscribe(finances => {
         this.finances = finances;
-        this.sortByType(this.finances);
+        this.sortByType(this.finances);        
+        this.expenditure = new MatTableDataSource(this.financesExpenditure);
+        this.income = new MatTableDataSource(this.financesIncome);
         console.log(this.finances, this.financesExpenditure, this.financesIncome)
       })
   }
@@ -119,7 +134,7 @@ export class FinancesComponent implements OnInit {
       type: type,
       name: name.trim(),
       amount: amount,
-      date: this.formatDatabaseDate(this.date),
+      date: this.getDatabaseDate(this.date),
     };
     console.log(new_finance.date)
     if (type == 0) {
@@ -143,21 +158,21 @@ export class FinancesComponent implements OnInit {
       name: updated_name,
       amount: updated_amount,
     }
-    this.financeservive.update(updated_finance, finance).subscribe(_ => {
-      this.getIncome();
-      this.getExpenditure();
-      this.getTotalCost();
-    })
+    this.financeservive.update(updated_finance, finance).subscribe();
+    setTimeout(() => {this.getMonthlyBalance(this.date)}, 500) 
   }
 
   deleteFinance(finance: Finances): void{
-    this.financeservive.delete(finance._id).subscribe()
+    this.finances = this.finances.filter(finance => finance !== finance)
+    this.financeservive.delete(finance._id).subscribe();
+    setTimeout(() => {this.getMonthlyBalance(this.date)}, 500)    
   }
 
   openDialog(finance: Finances){
     const dialogRef = this.dialog.open(DialogComponent, {
         width: '250px',
         data: {
+          id: finance._id,
           name: finance.name,
           amount: finance.amount
         },
@@ -197,15 +212,23 @@ export class FinancesComponent implements OnInit {
   }
 
   month_before(){
+    this.financesExpenditure = [];
+    this.financesIncome = [];
     this.date.setMonth(this.date.getMonth()-1);
-    this.print_date = this.formatePrintDate(this.date);
-    console.log(this.formatePrintDate(this.date));
+    console.log(this.date)
+    this.print_date = this.getPrintDate(this.date);
+    this.getMonthlyBalance(this.date)
+    console.log(this.date, this.getDatabaseDate(this.date))
   }
 
   month_after(){
+    this.financesExpenditure = [];
+    this.financesIncome = [];
     this.date.setMonth(this.date.getMonth()+1);
-    this.print_date = this.formatePrintDate(this.date);
-    console.log(this.formatePrintDate(this.date));
+    console.log(this.date)
+    this.print_date = this.getPrintDate(this.date);
+    this.getMonthlyBalance(this.date)
+    console.log(this.date, this.getDatabaseDate(this.date))
   }
 
 }
