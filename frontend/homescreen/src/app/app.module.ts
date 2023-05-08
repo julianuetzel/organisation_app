@@ -1,5 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG, HammerModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -13,7 +13,8 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSidenavModule } from '@angular/material/sidenav'
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSliderModule } from '@angular/material/slider';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -64,12 +65,14 @@ import { DialogComponent as FinancesDialog } from './finances/dialog/dialog.comp
     MatIconModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
+    MatSliderModule,
     MatInputModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    HammerModule,
     MatCheckboxModule,
     MatFormFieldModule,
     MatSelectModule,

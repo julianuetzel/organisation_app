@@ -1,0 +1,26 @@
+.mood {
+    display: flex;
+    flex-direction: row wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding-top: 2%;
+
+    mat-form-field {
+        height: 80% !important;
+    }
+
+    .chart{
+        width: 120%;
+        height: 120%;
+    }
+    .formfieldSection {
+        display: flex;
+        align-content: center;
+        align-items: center;
+        height: 60px;
+    }
+    .todaychart{
+        width: 200% !important;
+        height: 200% !important;
+    }
+}

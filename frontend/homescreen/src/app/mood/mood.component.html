@@ -1,1 +1,48 @@
-<p>mood works!</p>
+<div class="mood">
+    <div>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Zeitraum</mat-label>
+                        <mat-select matNativeControl required 
+                                    [(value)]="selected">
+                          <mat-option value="weekly">Woche</mat-option>
+                          <mat-option value="monthly">Monat</mat-option>
+                          <mat-option value="quarter_yearly">Viertel Jahr</mat-option>
+                          <mat-option value="yearly">Jahr</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="chart">
+                <canvas id="resumeChart"></canvas>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Heute</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="chart">
+                <div [hidden]="!data_today_exists" class="todaychart">
+                    <canvas id="todaysChart"></canvas>
+                </div>
+                <div [hidden]="data_today_exists" >
+                    <div *ngFor="let element of feelings">
+                        <label>{{element.type}}:</label>
+                        <mat-form-field>
+                            <mat-label>Value</mat-label>
+                            <input matInput type="number" [(ngModel)]="element.value">
+                          </mat-form-field>
+                        <mat-slider max="10" min="0" step="1" showTickMarks discrete>
+                            <input matSliderThumb type="range" [(ngModel)]="element.value" (click)="setData(element.type, element.value)">
+                        </mat-slider>
+                    </div>
+                    <button mat-button (click)="setCanvas()">Done</button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
